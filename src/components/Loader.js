@@ -23,8 +23,8 @@ const Loader = props => {
             onRequestClose={() => {console.log('close modal')}}>
             <View style={styles.modalBackground}>
                 <View style={styles.activityIndicatorWrapper}>
-                    <Spinner isVisible={loading} size={responsiveWidth(8)} type='FadingCircle'/>
-                    <Text>Please wait</Text>
+                    <Spinner isVisible={loading} size={responsiveWidth(10)} type='FadingCircle'/>
+                    <Text medium>Please wait</Text>
                 </View>
             </View>
         </Modal>
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
 
     activityIndicatorWrapper: {
         backgroundColor: '#FFFFFF',
-        height: responsiveWidth(24),
-        width: responsiveWidth(24),
+        height: responsiveWidth(26),
+        width: responsiveWidth(26),
         borderRadius: 5,
         display: 'flex',
         alignItems: 'center',

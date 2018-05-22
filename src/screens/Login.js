@@ -11,6 +11,7 @@ import {Images, Colors} from '../theme'
 import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 import { MyText, Loader } from "../components";
 import API from '../components/Api'
+import AppData from '../components/AppData'
 
 export default class Login extends Component {
   constructor(props){
@@ -26,8 +27,12 @@ export default class Login extends Component {
   }
 
   async onLogin() {
+    this.setState({loaderVisible: true})
     let res = await API.login(this.state.email, this.state.password)
-    alert(JSON.stringify(res))
+    this.setState({loaderVisible: false})
+    console.log('login res', res)
+
+    await AppData.setItem('login_user', res)
   }
   
   onSignup() {
