@@ -1,0 +1,3 @@
+rootProject.name = 'CommunityCareRN'
+
+include ':app'

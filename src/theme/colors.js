@@ -1,0 +1,31 @@
+const colors = {
+  Navy: '#025c7f',
+  Blue: '#017fb9',
+  Green: '#01dba9',  
+
+  backgroundPrimary: '#fff',
+  backgroundSecondary : '#f4f4f4',
+  backgroundThird : '#EEEEEE',
+  backgroundModal: '#ccca',
+
+  textPrimary: 'gray',
+  textSecondary: '#000000',
+  textPlaceholder: '#DDDDDD',
+  fieldPlaceholder: '#999999',
+
+  borderPrimary: '#DDDDDD',
+  borderSecondary: '#E2E2E2',
+  borderThird: '#AAAAAA',
+  borderFocused: '#D0FD44',
+
+  ripplePrimary: '#E22F4D50',
+  rippleSecondary: '#27C87D50',
+  rippleThird: '#1E80C750',
+
+  golden: '#FFAA00',
+  gray: '#AAAAAA',
+  lightGray: '#d3d3d3',
+  white: "#fff",  
+};
+  
+export default colors;
