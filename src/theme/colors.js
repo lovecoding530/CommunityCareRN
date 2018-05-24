@@ -8,7 +8,7 @@ const colors = {
   backgroundThird : '#EEEEEE',
   backgroundModal: '#ccca',
 
-  textPrimary: 'gray',
+  textPrimary: '#333',
   textSecondary: '#000000',
   textPlaceholder: '#DDDDDD',
   fieldPlaceholder: '#999999',

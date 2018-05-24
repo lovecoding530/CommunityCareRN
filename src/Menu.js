@@ -1,18 +1,41 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, StyleSheet} from 'react-native';
+import { View, StatusBar, StyleSheet, Image} from 'react-native';
+import {Colors, Images} from './theme';
+import { Container, Content, Button, Icon, Form, Item, Label, Input, Text, List, ListItem} from 'native-base';
 
-// StatusBar.setHidden(true);
 export default class Menu extends Component {
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.logo}>
-                    <Text style={styles.logoText}> Dying To Talk </Text>
-                </View>
-                <View>
-                    
-                </View>
-            </View>
+            <Container>
+                <Content>
+                    <View style={styles.logo}>
+                        <Image 
+                            source={Images.logo} 
+                            style={{width: 120, height: 120, resizeMode: 'contain'}}
+                        />
+                    </View>
+                    <List>
+                        <ListItem onPress={()=>{console.log("quick survey")}}>
+                            <Text>Quick Survey</Text>
+                        </ListItem>
+                        <ListItem onPress={()=>{console.log("skip survey")}}>
+                            <Text>Skip Survey</Text>
+                        </ListItem>
+                        <ListItem onPress={()=>{console.log("History of Your Surveys")}}>
+                            <Text>History of Your Surveys</Text>
+                        </ListItem>
+                        <ListItem onPress={()=>{console.log("History of Your Lab Tests")}}>
+                            <Text>History of Your Lab Tests</Text>
+                        </ListItem>
+                        <ListItem onPress={()=>{console.log("Contact Us")}}>
+                            <Text>Contact Us</Text>
+                        </ListItem>
+                        <ListItem onPress={()=>{console.log("Log out")}}>
+                            <Text>Log out</Text>
+                        </ListItem>
+                    </List>
+                </Content>
+            </Container>
         );
     }
 }

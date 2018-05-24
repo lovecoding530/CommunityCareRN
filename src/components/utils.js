@@ -12,4 +12,4 @@ function copy(o) {
     return output;
 }
 
-export {copy}
+export default {copy}

@@ -19,9 +19,12 @@ import Agreement from "./screens/Agreement";
 import ForgotPassword from "./screens/ForgotPassword";
 import ResetPassword from "./screens/ResetPassword";
 
+import QuickSurvey from "./screens/QuickSurvey";
+
+
 const headerStyle = { 
-    backgroundColor: Colors.Navy, 
-    height: 64, 
+    backgroundColor: '#fff', 
+    height: 44, 
     paddingHorizontal: 8,
 }
 
@@ -29,7 +32,7 @@ const HeaderTitle = () => {
     return (
         <Image 
             source={Images.logo} 
-            style={{width: 40, height: 40}}
+            style={{width: 40, height: 40, resizeMode: 'contain'}}
         />
     );
 }
@@ -50,7 +53,11 @@ const Footer = () => {
 
 const MenuIcon = ({ navigate }) => {
     return (
-        <View/>
+        <TouchableOpacity
+            onPress={() => navigate('DrawerOpen')}
+        >
+            <Icon name="bars" size={32}/>
+        </TouchableOpacity>
     );
 }
 
@@ -70,9 +77,32 @@ export const LoginStack = StackNavigator({
     headerMode: 'none',
 });
 
+export const QuickSurveyStack = StackNavigator({
+    QuickSurvey: {
+        screen: QuickSurvey,
+        navigationOptions: ({ navigation }) => ({
+            headerTitle: <HeaderTitle/>,
+            headerStyle: headerStyle,
+            headerLeft: <MenuIcon {...navigation} />,
+        }),
+    },
+});
+
+export const DrawerStack = DrawerNavigator(
+    {
+        QuickSurveyStack: { screen: QuickSurveyStack }
+    },
+    {
+        drawerWidth: width * 3 / 5,
+        drawerPosition: 'left',
+        contentComponent: props => <Menu {...props} />
+    }
+);
+
 export const PrimaryNav = StackNavigator({
     SplashScreen: { screen: Splash },
-    LoginStack: { screen: LoginStack },    
+    LoginStack: { screen: LoginStack }, 
+    DrawerStack: { screen: DrawerStack }, 
 }, {
     headerMode: 'none',
 })

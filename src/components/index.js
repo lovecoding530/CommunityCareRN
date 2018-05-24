@@ -4,5 +4,6 @@
 
 import Loader from "./Loader";
 import MyText from "./Text";
+import ManyChoices from "./ManyChoices";
 
-export {Loader, MyText}
+export {Loader, MyText, ManyChoices}
