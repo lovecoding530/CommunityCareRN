@@ -11,6 +11,7 @@ import {Images, Colors} from '../theme'
 import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 import { MyText } from "../components";
 import DatePicker from 'react-native-datepicker'
+import MapView from 'react-native-maps';
 
 export default class TimeAndLocation extends Component {
     constructor(props){
@@ -90,6 +91,15 @@ export default class TimeAndLocation extends Component {
                     />
 
                 </View>
+                <MapView
+                    initialRegion={{
+                        latitude: 37.78825,
+                        longitude: -122.4324,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                    style={{flex: 1}}
+                />
                 <Button block primary onPress={this.onAccept.bind(this)}><Text>Confirm and Schedual Pick up</Text></Button>
                 <Button block transparent danger onPress={this.goBack.bind(this)}><Text>Cancel</Text></Button>
             </Content>
