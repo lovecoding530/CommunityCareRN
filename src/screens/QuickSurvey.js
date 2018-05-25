@@ -61,15 +61,31 @@ export default class QuickSurvey extends Component {
             'Are you sure to finish the survey?',
             [
                 {text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {text: 'YES', onPress: async () => {
-                    this.setState({loaderVisible: true})
-                    const response = await API.postSurveyAnswer(this.state.questions)
-                    console.log(response)
-                    this.setState({loaderVisible: false})                          
-                }},
+                {text: 'YES', onPress: () => { this.finishSurvey() }},
             ],
             { cancelable: false }
         )
+    }
+
+    async finishSurvey() {
+        this.setState({loaderVisible: true})
+        const response = await API.postSurveyAnswer(this.state.questions)
+        this.setState({loaderVisible: false})
+
+        setTimeout(() => {
+            Alert.alert(
+                'Survey is completed',
+                `Recommended test is :\n${response}`,
+                [
+                    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                    {text: 'OK', onPress: () => {
+                        const {navigate} = this.props.navigation
+                        navigate('PaymentMethod', {recommendTest: response})
+                    }},
+                ],
+                { cancelable: false }
+            )
+        }, 500);
     }
 
     onChangedSurveyAnswers(questionIndex, checkedIndexes){

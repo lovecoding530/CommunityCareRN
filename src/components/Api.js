@@ -44,9 +44,24 @@ async function login(email, password){
     return await getJSON(LoginUrl)
 }
 
+async function signup(email, password, notes, lat, long, gender){
+    const SignupUrl = `${API_ROOT}/client?UserName=${email}&Password=${password}&Notes=${notes}&Lat=${lat}&Long=${long}&Gender=${gender}`
+    return await postJSON(SignupUrl, null)
+}
+
+async function sendVerification(email){
+    const SendVerificationUrl = `${API_ROOT}/client/query?username=${email}`
+    return await postJSON(SendVerificationUrl, null)
+}
+
+async function updatePassword(email, password, verifcationCode){
+    const updatePasswordUrl = `${API_ROOT}/client/query?UserName=${email}&Password=${password}&VerifcationCode=${verifcationCode}`
+    console.log(updatePasswordUrl)
+    return await postJSON(updatePasswordUrl, null)
+}
+
 async function getQuestionsBySurveyName(surveyName){
     const GetSurveyUrl = `${API_ROOT}/Survey/query?SurveyName=${surveyName}`
-    console.log(GetSurveyUrl)
     return await getJSON(GetSurveyUrl)
 }
 
@@ -65,4 +80,13 @@ async function postSurveyAnswer(questions){
     return await postJSON(GetSurveysUrl, null)
 }
 
-export default {getJSON, postJSON, login, getQuestionsBySurveyName, postSurveyAnswer}
+export default { 
+    getJSON, 
+    postJSON, 
+    login, 
+    signup,
+    sendVerification,
+    updatePassword,
+    getQuestionsBySurveyName, 
+    postSurveyAnswer
+}

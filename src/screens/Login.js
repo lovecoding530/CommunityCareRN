@@ -32,10 +32,15 @@ export default class Login extends Component {
         this.setState({loaderVisible: false})
         console.log('login res', res)
 
-        await AppData.setItem('login_user', res)
-
-        const {navigate} = this.props.navigation
-        navigate('DrawerStack')
+        setTimeout(async () => {
+            if(res != null) {
+                await AppData.setItem('login_user', res)
+                const {navigate} = this.props.navigation
+                navigate('DrawerStack')    
+            }else{
+                alert("Email or password is not correct")            
+            }
+        }, 500);
     }
     
     onSignup() {
@@ -79,7 +84,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 24,
-        paddingTop: responsiveHeight(10)
+        paddingTop: responsiveHeight(5)
     },
     welcome: {
         fontSize: 20,

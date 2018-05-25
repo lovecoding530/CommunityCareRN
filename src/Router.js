@@ -20,6 +20,8 @@ import ForgotPassword from "./screens/ForgotPassword";
 import ResetPassword from "./screens/ResetPassword";
 
 import QuickSurvey from "./screens/QuickSurvey";
+import PaymentMethod from "./screens/PaymentMethod";
+import TimeAndLocation from "./screens/TimeAndLocation";
 
 
 const headerStyle = { 
@@ -74,18 +76,29 @@ export const LoginStack = StackNavigator({
     ForgotPassword: {screen: ForgotPassword},
     ResetPassword: {screen: ResetPassword},
 }, {
-    headerMode: 'none',
+    navigationOptions: ({ navigation }) => ({
+        headerTitle: <HeaderTitle/>,
+        headerStyle: headerStyle,
+        headerLeft: null,
+    }),
 });
 
 export const QuickSurveyStack = StackNavigator({
     QuickSurvey: {
         screen: QuickSurvey,
-        navigationOptions: ({ navigation }) => ({
-            headerTitle: <HeaderTitle/>,
-            headerStyle: headerStyle,
-            headerLeft: <MenuIcon {...navigation} />,
-        }),
     },
+    PaymentMethod: {
+        screen: PaymentMethod,
+    },
+    TimeAndLocation: {
+        screen: TimeAndLocation,
+    },
+}, {
+    navigationOptions: ({ navigation }) => ({
+        headerTitle: <HeaderTitle/>,
+        headerStyle: headerStyle,
+        headerLeft: <MenuIcon {...navigation} />,
+    }),
 });
 
 export const DrawerStack = DrawerNavigator(

@@ -9,55 +9,76 @@ import {
 import { Container, Content, Button, Icon, Form, Item, Label, Input, Text, Footer} from 'native-base';
 import {Images, Colors} from '../theme'
 import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
-import { MyText } from "../components";
+import { MyText, Loader } from "../components";
+import API from '../components/Api'
+
 export default class ForgotPassword extends Component {
-  
-  componentDidMount() {
-    setTimeout(() => {
-      
-    }, 2000);
-  }
+    constructor(props){
+        super(props)
+        this.state = {
+            loaderVisible: false,
+            email: '',
+        }
+    }
 
-  onResetPassword() {
-    const {navigate} = this.props.navigation
-    navigate('ResetPassword')
+    componentDidMount() {
+    }
 
-  }
+    async onResetPassword() {
+        if(this.state.email == ''){
+            alert('Please enter email')
+            return
+        }
 
-  goBack() {
-    const {goBack} = this.props.navigation
-    goBack()
-  }
+        this.setState({loaderVisible: true})
+        let res = await API.sendVerification(this.state.email)
+        this.setState({loaderVisible: false})
+        setTimeout(() => {
+            if(res == 'True') {
+                alert('We just sent a verification code')
+                const {navigate} = this.props.navigation
+                navigate('ResetPassword', {email: this.state.email})
+            }else{
+                alert('Failed to signed up')            
+            }                
+        }, 500);
+    }
 
-  render() {
-    return (
-    <Container>
-        <Content contentContainerStyle={styles.container}>
-            <MyText mediumLarge bold center>Forgot Password</MyText>
-            <Form style={styles.form}>
-                <Item floatingLabel last>
-                    <Label>Email</Label>
-                    <Input />
-                </Item>
-            </Form>
-            <Button block primary onPress={this.onResetPassword.bind(this)}><Text>Reset Password</Text></Button>
-            <Button block transparent danger onPress={this.goBack.bind(this)}><Text>{"< "}Back to log in</Text></Button>
-        </Content>
-    </Container>
-    );
-  }
+    goBack() {
+        const {goBack} = this.props.navigation
+        goBack()
+    }
+
+    render() {
+        return (
+        <Container>
+            <Loader loading={this.state.loaderVisible}/>
+            <Content contentContainerStyle={styles.container}>
+                <MyText mediumLarge bold center>Forgot Password</MyText>
+                <Form style={styles.form}>
+                    <Item floatingLabel last>
+                        <Label>Email</Label>
+                        <Input autoCapitalize='none' autoCorrect={false} value={this.state.email} onChangeText={text=>this.setState({email: text})}/>
+                    </Item>
+                </Form>
+                <Button block primary onPress={this.onResetPassword.bind(this)}><Text>Reset Password</Text></Button>
+                <Button block transparent danger onPress={this.goBack.bind(this)}><Text>{"< "}Back to log in</Text></Button>
+            </Content>
+        </Container>
+        );
+    }
 }
   
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      padding: 24,
-      paddingTop: responsiveHeight(10)
+        flex: 1,
+        padding: 24,
+        paddingTop: responsiveHeight(5)
     },
     welcome: {
-      fontSize: 20,
-      textAlign: 'center',
-      margin: 10,
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
     },
 
     form: {

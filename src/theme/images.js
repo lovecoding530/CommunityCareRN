@@ -4,6 +4,10 @@ const images = {
     checkon : require('../assets/images/checkon.png'),
     radiooff : require('../assets/images/radiooff.png'),
     radioon : require('../assets/images/radioon.png'),
+
+    calendar : require('../assets/images/calendar.png'),
+    clock : require('../assets/images/clock.png'),
+
 }
 
 export default images;
