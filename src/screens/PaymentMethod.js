@@ -42,7 +42,7 @@ export default class PaymentMethod extends Component {
         return (
         <Container>
             <Content contentContainerStyle={styles.container}>
-                <Dropdown label='Payment Method' data={data} onChangeText={(value, index, data)=>{this.setState({paymentMethod: index})}}/>
+                <Dropdown label='Payment Method' data={data} dropdownPosition={0} onChangeText={(value, index, data)=>{this.setState({paymentMethod: index})}}/>
                 <Button block primary onPress={this.onConfirm.bind(this)}><Text>Confirm and Schedual Pick up</Text></Button>
                 <Button block transparent danger onPress={this.onCancel.bind(this)}><Text>Cancel</Text></Button>
             </Content>
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       padding: 24,
+      backgroundColor: Colors.backgroundPrimary,
     },
     welcome: {
       fontSize: 20,

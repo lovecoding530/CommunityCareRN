@@ -12,29 +12,34 @@ import { Container, Content, Button, Icon, Form, Item, Label, Text, Footer, List
 import {Images, Colors} from '../theme'
 import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 import { MyText, Loader, ManyChoices } from "../components";
+import { Dropdown } from 'react-native-material-dropdown';
 import Utils from "../components/utils";
 import API from '../components/Api'
 
-export default class QuickSurvey extends Component {
-
+export default class ManualLabTest extends Component {
     constructor(props){
         super(props)
         this.state = {
             loaderVisible: false,
-            isCheckedAgreement: false,
-            questions: [],
-            surveyName: 'Main Survey',
-            checked: true,
+            bloodTests: [],
+            dropdownValues: [],
+            selectedLabTestIndex: -1,
+            selectedLabTests: [],
         }
     }
 
     async componentDidMount() {
+        var localePre = 'e'
         this.setState({loaderVisible: true})
-        const questions = await API.getQuestionsBySurveyName(this.state.surveyName)
-        for (var question of questions) {
-            question.checkedIndexes=[]
-        }
-        this.setState({questions, loaderVisible: false})
+        const bloodTests = await API.getBloodTests()
+        var dropdownValues = bloodTests.map((test) => {
+            var item = {value:test[`${localePre}name`]}
+            console.log(item)
+            return item
+        })
+        console.log(bloodTests)
+        console.log(dropdownValues)
+        this.setState({bloodTests, dropdownValues, loaderVisible: false})
     }
 
     goBack() {
@@ -94,40 +99,48 @@ export default class QuickSurvey extends Component {
         this.setState({questions})
     }
 
-    renderQuestionItem({item, index}) {
+    renderLabTestItem({item, index}) {
         var localePre = 'e'
-        var choices = []
-        var many = item.qType == 2
-        for (let index = 1; index <= 12; index++) {
-            var key = `choice${index}${localePre}`
-            var value = item[key]
-            if (value == '') break
-            choices.push(value)
-        }
-        var checkedIndexes = item.checkedIndexes ? item.checkedIndexes : []
 
         return (
             <Card>
                 <CardItem>
                     <Body>
-                        <MyText center style={styles.question}>{item.etitle}</MyText>
-                        <View style={styles.question_divider}/>
-                        <ManyChoices many={many} questionIndex={index} data={choices} checkedIndexes={checkedIndexes} onChanged={this.onChangedSurveyAnswers.bind(this)}/>
+                        <MyText center style={styles.question}>{item[`${localePre}name`]}</MyText>
                     </Body>
                 </CardItem>
             </Card>
         )
     }
-            
+
+    onAdd() {
+        var selectedLabTests = this.state.selectedLabTests
+        selectedLabTests.push(this.state.bloodTests[this.state.selectedLabTestIndex])
+        this.setState({
+            selectedLabTests,
+        })
+    }
+
     render() {
         return (
         <Container>
             <Loader loading={this.state.loaderVisible}/>
             <Content contentContainerStyle={styles.container}>
-                <MyText medium bold center style={styles.surveyTitle}>{this.state.surveyName}</MyText>
+                <View style={styles.dropdownWrapper}>
+                    <Dropdown 
+                        label='Lab Test' 
+                        data={this.state.dropdownValues} 
+                        dropdownPosition={0} 
+                        itemCount={5} 
+                        onChangeText={(value, index, data)=>{this.setState({selectedLabTestIndex: index})}}
+                        containerStyle={{flex: 1}}/>
+                    <Button style={styles.addIcon} onPress={this.onAdd.bind(this)}>
+                        <Icon name='md-add' />
+                    </Button>
+                </View>
                 <FlatList
-                    data={this.state.questions}
-                    renderItem = {this.renderQuestionItem.bind(this)}
+                    data={this.state.selectedLabTests}
+                    renderItem = {this.renderLabTestItem.bind(this)}
                     keyExtractor = {(item, index) => index.toString()}
                 />
                 <Row style={styles.buttonBar}>
@@ -140,40 +153,30 @@ export default class QuickSurvey extends Component {
     }
 }
   
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 16,
+        padding: 24,
         backgroundColor: Colors.backgroundPrimary,
-    },
-    surveyTitle: {
-        marginVertical: 18,
+        flex: 1,
     },
 
-    form: {
-        marginTop: 24,
-    },
-
-    checkboxBody: {
+    dropdownWrapper: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingRight: 56,
+    },
+
+    addIcon: {
+        position: 'absolute',
+        right: 0,
+        bottom: 8,
     },
 
     buttonBar: {
         padding: 24,
         justifyContent: 'space-between'
     },
-
-    question: {
-        width: '100%'
-    },
-
-    question_divider: {
-        width: '50%',
-        height: 0.5,
-        marginVertical: 8,
-        alignSelf: 'center',
-        backgroundColor: Colors.Navy
-    }
 
 });
   
