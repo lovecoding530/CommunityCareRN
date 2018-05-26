@@ -87,6 +87,11 @@ async function createOrderBySurveyRecomendation(date, time, coordinate, paymentM
     return await postJSON(url, null)
 }
 
+async function getBloodTests(){
+    var getBloodTestUrl = `${API_ROOT}/BloodTest?GetBloodTests`
+    return await getJSON(getBloodTestUrl)
+}
+
 export default { 
     getJSON, 
     postJSON, 
@@ -97,4 +102,5 @@ export default {
     getQuestionsBySurveyName, 
     postSurveyAnswer,
     createOrderBySurveyRecomendation,
+    getBloodTests,
 }

@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 24,
-        paddingTop: responsiveHeight(5)
+        paddingTop: responsiveHeight(5),
+        backgroundColor: Colors.backgroundPrimary,
     },
     welcome: {
         fontSize: 20,

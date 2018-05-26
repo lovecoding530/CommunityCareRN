@@ -4,6 +4,10 @@ import {Colors, Images} from './theme';
 import { Container, Content, Button, Icon, Form, Item, Label, Input, Text, List, ListItem} from 'native-base';
 
 export default class Menu extends Component {
+    goto(key){
+        console.log("goto ", key)
+        this.props.navigation.navigate(key)
+    }
     render() {
         return (
             <Container>
@@ -15,10 +19,10 @@ export default class Menu extends Component {
                         />
                     </View>
                     <List>
-                        <ListItem onPress={()=>{console.log("quick survey")}}>
+                        <ListItem onPress={()=>{this.goto('QuickSurveyStack')}}>
                             <Text>Quick Survey</Text>
                         </ListItem>
-                        <ListItem onPress={()=>{console.log("skip survey")}}>
+                        <ListItem onPress={()=>{this.goto('SkipSurveyStack')}}>
                             <Text>Skip Survey</Text>
                         </ListItem>
                         <ListItem onPress={()=>{console.log("History of Your Surveys")}}>

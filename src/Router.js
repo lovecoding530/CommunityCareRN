@@ -23,6 +23,7 @@ import QuickSurvey from "./screens/QuickSurvey";
 import PaymentMethod from "./screens/PaymentMethod";
 import TimeAndLocation from "./screens/TimeAndLocation";
 
+import ManualLabTest from "./screens/ManualLabTest";
 
 const headerStyle = { 
     backgroundColor: '#fff', 
@@ -34,7 +35,7 @@ const HeaderTitle = () => {
     return (
         <Image 
             source={Images.logo} 
-            style={{width: 40, height: 40, resizeMode: 'contain'}}
+            style={{width: 40, height: 40, resizeMode: 'contain', flex: 1}}
         />
     );
 }
@@ -69,6 +70,12 @@ const HomeIcon = ({ navigate, goBack }) => {
     );
 }
 
+const EmptyIcon = ({ navigate }) => {
+    return (
+        <View style={{width: 32, height: 32}}/>
+    );
+}
+
 export const LoginStack = StackNavigator({
     Login: {screen: Login},
     Signup: {screen: Signup},
@@ -84,26 +91,35 @@ export const LoginStack = StackNavigator({
 });
 
 export const QuickSurveyStack = StackNavigator({
-    QuickSurvey: {
-        screen: QuickSurvey,
-    },
-    PaymentMethod: {
-        screen: PaymentMethod,
-    },
-    TimeAndLocation: {
-        screen: TimeAndLocation,
-    },
+    QuickSurvey: { screen: QuickSurvey, },
+    PaymentMethod: { screen: PaymentMethod, },
+    TimeAndLocation: { screen: TimeAndLocation, },
 }, {
     navigationOptions: ({ navigation }) => ({
         headerTitle: <HeaderTitle/>,
         headerStyle: headerStyle,
         headerLeft: <MenuIcon {...navigation} />,
+        headerRight: <EmptyIcon/>
+    }),
+});
+
+export const SkipSurveyStack = StackNavigator({
+    ManualLabTest: { screen: ManualLabTest, },
+    PaymentMethod: { screen: PaymentMethod, },
+    TimeAndLocation: { screen: TimeAndLocation, },
+}, {
+    navigationOptions: ({ navigation }) => ({
+        headerTitle: <HeaderTitle/>,
+        headerStyle: headerStyle,
+        headerLeft: <MenuIcon {...navigation} />,
+        headerRight: <EmptyIcon/>
     }),
 });
 
 export const DrawerStack = DrawerNavigator(
     {
-        QuickSurveyStack: { screen: QuickSurveyStack }
+        QuickSurveyStack: { screen: QuickSurveyStack },
+        SkipSurveyStack: { screen: SkipSurveyStack },
     },
     {
         drawerWidth: width * 3 / 5,

@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 24,
         paddingVertical: 8,
+        backgroundColor: Colors.backgroundPrimary,
     },
 
     buttonBar: {
@@ -193,6 +194,7 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         shadowOffset: {width: 1, height: 1},
         shadowOpacity: 0.3,
+        elevation: 3,
         padding: 2, 
     }
 });

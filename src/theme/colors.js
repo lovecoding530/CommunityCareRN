@@ -3,7 +3,7 @@ const colors = {
   Blue: '#017fb9',
   Green: '#01dba9',  
 
-  backgroundPrimary: '#fff',
+  backgroundPrimary: '#F5FCFF',
   backgroundSecondary : '#f4f4f4',
   backgroundThird : '#EEEEEE',
   backgroundModal: '#ccca',
