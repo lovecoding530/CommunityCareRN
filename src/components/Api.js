@@ -80,6 +80,13 @@ async function postSurveyAnswer(questions){
     return await postJSON(GetSurveysUrl, null)
 }
 
+async function createOrderBySurveyRecomendation(date, time, coordinate, paymentMethod, recommendation) {
+    var user = await AppData.getItem('login_user')
+    var url = `${API_ROOT}/Order/CreateOrderBySurveyRecomendation?UserID=${user.clientID}&OrderDate=${date} ${time}:00.000&Longitude=${coordinate.longitude}&Latitude=${coordinate.latitude}&paymentType=${paymentMethod}&Recommendation=no%20recommendation&SurveyRecomendation=${recommendation}`
+    console.log('createOrderBySurveyRecomendation', url)
+    return await postJSON(url, null)
+}
+
 export default { 
     getJSON, 
     postJSON, 
@@ -88,5 +95,6 @@ export default {
     sendVerification,
     updatePassword,
     getQuestionsBySurveyName, 
-    postSurveyAnswer
+    postSurveyAnswer,
+    createOrderBySurveyRecomendation,
 }
