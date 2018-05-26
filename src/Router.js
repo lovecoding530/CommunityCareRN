@@ -34,7 +34,7 @@ const HeaderTitle = () => {
     return (
         <Image 
             source={Images.logo} 
-            style={{width: 40, height: 40, resizeMode: 'contain'}}
+            style={{width: 40, height: 40, resizeMode: 'contain', flex: 1}}
         />
     );
 }

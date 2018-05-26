@@ -72,7 +72,7 @@ export default class Login extends Component {
                 <Button block primary onPress={this.onLogin.bind(this)}><Text>Sign In</Text></Button>
                 <Button block transparent danger onPress={this.onForgotPassword.bind(this)}><Text>Forgot Password</Text></Button>
             </Content>
-            <Footer>
+            <Footer style={styles.footer}>
                 <Button block transparent danger onPress={this.onSignup.bind(this)}><MyText medium>Don't you have acount?</MyText><Text>Sign up</Text></Button>        
             </Footer>
         </Container>
@@ -94,5 +94,11 @@ const styles = StyleSheet.create({
 
     form: {
         marginVertical: 24,
+    }, 
+
+    footer: {
+        backgroundColor: '#fff0',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });

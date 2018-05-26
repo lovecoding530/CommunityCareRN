@@ -23,7 +23,7 @@ const Loader = props => {
             onRequestClose={() => {console.log('close modal')}}>
             <View style={styles.modalBackground}>
                 <View style={styles.activityIndicatorWrapper}>
-                    <Spinner isVisible={loading} size={responsiveWidth(10)} type='FadingCircle'/>
+                    <Spinner isVisible={loading} size={responsiveWidth(10)} type='Circle'/>
                     <Text medium>Please wait</Text>
                 </View>
             </View>
