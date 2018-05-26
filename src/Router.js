@@ -69,6 +69,12 @@ const HomeIcon = ({ navigate, goBack }) => {
     );
 }
 
+const EmptyIcon = ({ navigate }) => {
+    return (
+        <View style={{width: 32, height: 32}}/>
+    );
+}
+
 export const LoginStack = StackNavigator({
     Login: {screen: Login},
     Signup: {screen: Signup},
@@ -98,6 +104,7 @@ export const QuickSurveyStack = StackNavigator({
         headerTitle: <HeaderTitle/>,
         headerStyle: headerStyle,
         headerLeft: <MenuIcon {...navigation} />,
+        headerRight: <EmptyIcon/>
     }),
 });
 
