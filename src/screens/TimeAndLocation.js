@@ -3,7 +3,8 @@ import {
   Platform,
   StyleSheet,
   View, 
-  Image
+  Image,
+  Alert
 } from 'react-native';
 
 import { Container, Content, Button, Icon, Form, Item, Label, Input, Text, Footer, Textarea, Row, Card, CardItem, Body} from 'native-base';
@@ -61,13 +62,33 @@ export default class TimeAndLocation extends Component {
     async onConfirm() {
         const {navigate, state: {params}} = this.props.navigation
         this.setState({loaderVisible: true})
-        let res = await Api.createOrderBySurveyRecomendation(
-                            this.state.date, this.state.time, 
-                            this.state.coordinate, 
-                            params.paymentMethod, 
-                            params.recommendTest)   
-        console.log('createOrderBySurveyRecomendation', res)
+        var res 
+        if(params.recommendTest != null){
+            res = await Api.createOrderBySurveyRecomendation(
+                this.state.date, this.state.time, 
+                this.state.coordinate, 
+                params.paymentMethod, 
+                params.recommendTest)
+        }else{
+            res = await Api.createOrderByItems(
+                this.state.date, this.state.time, 
+                this.state.coordinate, 
+                params.paymentMethod, 
+                params.labTestIDs)
+        }
+        console.log('createOrderByItems', res)
         this.setState({loaderVisible: false})
+
+        setTimeout(() => {
+            Alert.alert(
+                'Thank you for your select Community Health Care.',
+                'You will receive the order confirmation on your email.',
+                [
+                    {text: 'OK'},
+                ],
+                { cancelable: false }
+            )
+        }, 500);
     }
 
     goBack() {

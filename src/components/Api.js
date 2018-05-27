@@ -87,9 +87,52 @@ async function createOrderBySurveyRecomendation(date, time, coordinate, paymentM
     return await postJSON(url, null)
 }
 
+async function createOrderByItems(date, time, coordinate, paymentMethod, labTestIDs) {
+    var orderItems = labTestIDs.join(',')
+    var user = await AppData.getItem('login_user')
+    var url = `${API_ROOT}/Order/CreateOrderByItems?UserID=${user.clientID}&OrderDate=${date} ${time}:00.000&Longitude=${coordinate.longitude}&Latitude=${coordinate.latitude}&paymentType=${paymentMethod}&Recommendation=no%20recommendation&OrderItems=${orderItems}`
+    console.log('createOrderByItems', url)
+    return await postJSON(url, null)
+}
+
 async function getBloodTests(){
     var getBloodTestUrl = `${API_ROOT}/BloodTest?GetBloodTests`
     return await getJSON(getBloodTestUrl)
+}
+
+async function getAllClientSurvey(){
+    var user = await AppData.getItem('login_user')
+    var url = `${API_ROOT}/Survey/GetAllClientSurvey?UserID=${user.clientID}`
+    return await getJSON(url)
+}
+
+async function getSurveyAnswer(enrollID){
+    var url = `${API_ROOT}/Survey/GetSurveyAnswer?EnrollID=${enrollID}`
+    return await getJSON(url)
+}
+
+async function deleteSurveyEnrollment(enrollID){
+    var user = await AppData.getItem('login_user')
+    var url = `${API_ROOT}/Survey/DeleteSurveyEnrollment?EnrollmentID=${enrollID}&DeletedBy=${user.clientID}`
+    return await postJSON(url, null)
+}
+
+async function getAllUserOrders(){
+    var user = await AppData.getItem('login_user')
+    var url = `${API_ROOT}/Order/GetAllUserOrders?UserID=${user.clientID}`
+    return await getJSON(url)
+}
+
+async function getContactInfo(){
+    var url = `${API_ROOT}/Info/GetContactInfo`
+    return await getJSON(url)
+}
+
+async function sendContactMessage(message){
+    var user = await AppData.getItem('login_user')
+    var url = `${API_ROOT}/Info/query?UserID=${user.clientID}&Message=${message}`
+    console.log(url)
+    return await postJSON(url, null)
 }
 
 export default { 
@@ -102,5 +145,12 @@ export default {
     getQuestionsBySurveyName, 
     postSurveyAnswer,
     createOrderBySurveyRecomendation,
+    createOrderByItems,
     getBloodTests,
+    getAllClientSurvey,
+    getSurveyAnswer,
+    deleteSurveyEnrollment,
+    getAllUserOrders,
+    getContactInfo,
+    sendContactMessage,
 }

@@ -24,8 +24,16 @@ export default class PaymentMethod extends Component {
     }
 
     onConfirm() {
+        if(this.state.paymentMethod == -1) {
+            alert('Select a payment method')
+            return
+        }
         const {navigate, state: {params}} = this.props.navigation
-        navigate('TimeAndLocation', {recommendTest: params.recommendTest, paymentMethod: this.state.paymentMethod})
+        navigate('TimeAndLocation', {
+            recommendTest: params.recommendTest, 
+            labTestIDs: params.labTestIDs, 
+            paymentMethod: this.state.paymentMethod
+        })
     }
 
     onCancel() {

@@ -25,6 +25,11 @@ import TimeAndLocation from "./screens/TimeAndLocation";
 
 import ManualLabTest from "./screens/ManualLabTest";
 
+import SurveyHistory from "./screens/SurveyHistory";
+import SurveyDetail from "./screens/SurveyDetail";
+
+import ContactUs from "./screens/ContactUs";
+
 const headerStyle = { 
     backgroundColor: '#fff', 
     height: 44, 
@@ -76,6 +81,16 @@ const EmptyIcon = ({ navigate }) => {
     );
 }
 
+const BackIcon = ({ navigate, goBack }) => {
+    return (
+        <TouchableOpacity
+            onPress={() => goBack()}
+        >
+            <Icon name="chevron-left" size={24} color={Colors.Navy}/>
+        </TouchableOpacity>
+    );
+}
+
 export const LoginStack = StackNavigator({
     Login: {screen: Login},
     Signup: {screen: Signup},
@@ -116,10 +131,45 @@ export const SkipSurveyStack = StackNavigator({
     }),
 });
 
+export const SurveyHistoryStack = StackNavigator({
+    SurveyHistory: { 
+        screen: SurveyHistory, 
+        navigationOptions: ({ navigation }) => ({
+            headerTitle: <HeaderTitle/>,
+            headerStyle: headerStyle,
+            headerLeft: <MenuIcon {...navigation} />,
+            headerRight: <EmptyIcon/>
+        }),
+    },
+    SurveyDetail: { 
+        screen: SurveyDetail, 
+        navigationOptions: ({ navigation }) => ({
+            headerTitle: <HeaderTitle/>,
+            headerStyle: headerStyle,
+            headerLeft: <BackIcon {...navigation} />,
+            headerRight: <EmptyIcon/>
+        }),
+    },
+});
+
+export const ContactUsStack = StackNavigator({
+    ContactUs: { 
+        screen: ContactUs, 
+        navigationOptions: ({ navigation }) => ({
+            headerTitle: <HeaderTitle/>,
+            headerStyle: headerStyle,
+            headerLeft: <MenuIcon {...navigation} />,
+            headerRight: <EmptyIcon/>
+        }),
+    },
+});
+
 export const DrawerStack = DrawerNavigator(
     {
         QuickSurveyStack: { screen: QuickSurveyStack },
         SkipSurveyStack: { screen: SkipSurveyStack },
+        SurveyHistoryStack: { screen: SurveyHistoryStack },
+        ContactUsStack: { screen: ContactUsStack },
     },
     {
         drawerWidth: width * 3 / 5,

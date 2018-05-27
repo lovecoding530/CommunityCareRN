@@ -96,6 +96,7 @@ export default class QuickSurvey extends Component {
 
     renderQuestionItem({item, index}) {
         var localePre = 'e'
+        var title = item[`${localePre}title`]
         var choices = []
         var many = item.qType == 2
         for (let index = 1; index <= 12; index++) {
@@ -110,7 +111,7 @@ export default class QuickSurvey extends Component {
             <Card>
                 <CardItem>
                     <Body>
-                        <MyText center style={styles.question}>{item.etitle}</MyText>
+                        <MyText center style={styles.question}>{title}</MyText>
                         <View style={styles.question_divider}/>
                         <ManyChoices many={many} questionIndex={index} data={choices} checkedIndexes={checkedIndexes} onChanged={this.onChangedSurveyAnswers.bind(this)}/>
                     </Body>

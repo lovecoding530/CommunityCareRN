@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   Alert,
+  TouchableOpacity
 } from 'react-native';
 
 import { Container, Content, Button, Icon, Form, Item, Label, Text, Footer, List, ListItem, Body, CheckBox, Card, CardItem, Row, Right, Left, Radio,} from 'native-base';
@@ -34,11 +35,8 @@ export default class ManualLabTest extends Component {
         const bloodTests = await API.getBloodTests()
         var dropdownValues = bloodTests.map((test) => {
             var item = {value:test[`${localePre}name`]}
-            console.log(item)
             return item
         })
-        console.log(bloodTests)
-        console.log(dropdownValues)
         this.setState({bloodTests, dropdownValues, loaderVisible: false})
     }
 
@@ -47,78 +45,91 @@ export default class ManualLabTest extends Component {
         goBack()
     }
 
-    onSkip() {
+    onCancel() {
         Alert.alert(
             'Are you sure?',
             'Are you sure to skip the survey?',
             [
                 {text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                 {text: 'YES', onPress: async () => {
+                    this.goBack()
                 }},
             ],
             { cancelable: false }
         )
     }
 
-    onFinish(){
-        Alert.alert(
-            'Are you sure?',
-            'Are you sure to finish the survey?',
-            [
-                {text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {text: 'YES', onPress: () => { this.finishSurvey() }},
-            ],
-            { cancelable: false }
-        )
+    onProceed(){
+        const {navigate} = this.props.navigation
+        var selectedLabTestIDs = this.state.selectedLabTests.map(testIndex => this.state.bloodTests[testIndex].btID)
+        navigate('PaymentMethod', {labTestIDs: selectedLabTestIDs})
     }
 
-    async finishSurvey() {
-        this.setState({loaderVisible: true})
-        const response = await API.postSurveyAnswer(this.state.questions)
-        this.setState({loaderVisible: false})
-
-        setTimeout(() => {
-            Alert.alert(
-                'Survey is completed',
-                `Recommended test is :\n${response}`,
-                [
-                    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                    {text: 'OK', onPress: () => {
-                        const {navigate} = this.props.navigation
-                        navigate('PaymentMethod', {recommendTest: response})
-                    }},
-                ],
-                { cancelable: false }
-            )
-        }, 500);
+    onAdd() {
+        if (this.state.selectedLabTestIndex == -1) {
+            alert('Select a lab test')
+            return
+        }
+        if (this.state.selectedLabTests.includes(this.state.selectedLabTestIndex)){
+            alert('Already added the lab test')
+            return
+        }
+        var selectedLabTests = Utils.copy(this.state.selectedLabTests)
+        selectedLabTests.push(this.state.selectedLabTestIndex)
+        this.setState({
+            selectedLabTests,
+        })
     }
 
-    onChangedSurveyAnswers(questionIndex, checkedIndexes){
-        var questions = Utils.copy(this.state.questions)
-        questions[questionIndex].checkedIndexes = checkedIndexes
-        this.setState({questions})
+    onDelete(index) {
+        var selectedLabTests = Utils.copy(this.state.selectedLabTests)
+        selectedLabTests.splice(index, 1)
+        this.setState({selectedLabTests})
     }
 
     renderLabTestItem({item, index}) {
         var localePre = 'e'
-
+        var bloodTest = this.state.bloodTests[item]
         return (
             <Card>
                 <CardItem>
-                    <Body>
-                        <MyText center style={styles.question}>{item[`${localePre}name`]}</MyText>
+                    <Body style={styles.cardItem}>
+                        <MyText medium style={{flex: 1}}>{bloodTest[`${localePre}name`]}</MyText>
+                        <View style={styles.priceView}>
+                            <Image source={Images.dollar} style={styles.dollarIcon}/>
+                            <MyText light style={styles.priceText}>{bloodTest.Price}</MyText>
+                        </View>
+                        <TouchableOpacity onPress={this.onDelete.bind(this, index)}>
+                            <Image source={Images.delete} style={{width: 24, height: 24, tintColor: '#ff0000'}}/>
+                        </TouchableOpacity>
                     </Body>
                 </CardItem>
             </Card>
         )
     }
-
-    onAdd() {
-        var selectedLabTests = this.state.selectedLabTests
-        selectedLabTests.push(this.state.bloodTests[this.state.selectedLabTestIndex])
-        this.setState({
-            selectedLabTests,
-        })
+    
+    renderListFooter() {
+        var totalPrice = 0
+        for (const testIndex of this.state.selectedLabTests) {
+            var bloodTest = this.state.bloodTests[testIndex]
+            totalPrice += bloodTest.Price
+        }
+        if (this.state.selectedLabTests.length > 0){
+            console.log(totalPrice)
+            return (
+                <View style={{flexDirection: 'row', paddingVertical: 8, paddingHorizontal: 36, alignItems: 'center'}}>
+                    <MyText right medium style={{flex: 1}}>Total: </MyText>
+                    <View style={styles.priceView}>
+                        <Image source={Images.dollar} style={styles.dollarIcon}/>
+                        <MyText light style={styles.priceText}>{totalPrice}</MyText>
+                    </View>
+                </View>
+            )
+        }else{
+            return (            
+                <View></View>
+            )
+        }
     }
 
     render() {
@@ -142,11 +153,13 @@ export default class ManualLabTest extends Component {
                     data={this.state.selectedLabTests}
                     renderItem = {this.renderLabTestItem.bind(this)}
                     keyExtractor = {(item, index) => index.toString()}
+                    ListFooterComponent = {this.renderListFooter.bind(this)}
+                    ListEmptyComponent = {<MyText center medium style={{marginVertical: 8,}}>No selected lab tests</MyText>}
                 />
-                <Row style={styles.buttonBar}>
-                    <Button bordered danger onPress={this.onSkip.bind(this)}><Text>   Skip   </Text></Button>
-                    <Button primary onPress={this.onFinish.bind(this)}><Text>   Finish   </Text></Button>
-                </Row>
+                <View style={styles.buttonBar}>
+                    <Button bordered danger onPress={this.onCancel.bind(this)}><Text>   Cancel   </Text></Button>
+                    <Button primary onPress={this.onProceed.bind(this)}><Text>   Proceed   </Text></Button>
+                </View>
             </Content>
         </Container>
         );
@@ -174,9 +187,33 @@ const styles = StyleSheet.create({
     },
 
     buttonBar: {
-        padding: 24,
+        flexDirection: 'row',
+        paddingTop: 24,
         justifyContent: 'space-between'
     },
 
+    cardItem: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+
+    priceView: {
+        flexDirection: 'row',
+        backgroundColor: Colors.Green,
+        borderRadius: 4,
+        padding: 4,
+        alignItems: 'center',
+        marginHorizontal: 8,
+    },
+
+    dollarIcon: {
+        width: 20,
+        height: 20,
+        tintColor: '#fff'
+    },
+
+    priceText: {
+        fontSize: 16,
+    }
 });
   

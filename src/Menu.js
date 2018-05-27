@@ -25,13 +25,13 @@ export default class Menu extends Component {
                         <ListItem onPress={()=>{this.goto('SkipSurveyStack')}}>
                             <Text>Skip Survey</Text>
                         </ListItem>
-                        <ListItem onPress={()=>{console.log("History of Your Surveys")}}>
+                        <ListItem onPress={()=>{this.goto('SurveyHistoryStack')}}>
                             <Text>History of Your Surveys</Text>
                         </ListItem>
                         <ListItem onPress={()=>{console.log("History of Your Lab Tests")}}>
                             <Text>History of Your Lab Tests</Text>
                         </ListItem>
-                        <ListItem onPress={()=>{console.log("Contact Us")}}>
+                        <ListItem onPress={()=>{this.goto('ContactUsStack')}}>
                             <Text>Contact Us</Text>
                         </ListItem>
                         <ListItem onPress={()=>{console.log("Log out")}}>

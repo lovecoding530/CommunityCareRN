@@ -30,7 +30,7 @@ export default class Choice extends Component {
 
         return (
             <TouchableOpacity style={styles.container} onPress={()=>{this.props.onPress(this.props.index)}}>
-                <MyText style={styles.text}>{this.props.text}</MyText>            
+                <MyText style={styles.text}>{this.props.text}</MyText>     
                 <Image source={icon} style={styles.icon}/>
             </TouchableOpacity>
         )
