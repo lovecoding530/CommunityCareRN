@@ -18,8 +18,8 @@ export default class Login extends Component {
         super(props)
         this.state = {
             loaderVisible: false,
-            email: '',
-            password: '',
+            email: 'client1',
+            password: 'client1',
         }
     }
 

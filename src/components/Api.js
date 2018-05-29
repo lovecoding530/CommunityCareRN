@@ -123,6 +123,12 @@ async function getAllUserOrders(){
     return await getJSON(url)
 }
 
+async function deleteOrder(orderID){
+    var user = await AppData.getItem('login_user')
+    var url = `${API_ROOT}/Order/DeleteOrder?OrderID=${orderID}&UserID=${user.clientID}`
+    return await postJSON(url, null)
+}
+
 async function getContactInfo(){
     var url = `${API_ROOT}/Info/GetContactInfo`
     return await getJSON(url)
@@ -151,6 +157,7 @@ export default {
     getSurveyAnswer,
     deleteSurveyEnrollment,
     getAllUserOrders,
+    deleteOrder,
     getContactInfo,
     sendContactMessage,
 }

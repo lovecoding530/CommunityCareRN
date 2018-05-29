@@ -28,6 +28,9 @@ import ManualLabTest from "./screens/ManualLabTest";
 import SurveyHistory from "./screens/SurveyHistory";
 import SurveyDetail from "./screens/SurveyDetail";
 
+import LabTestHistory from "./screens/LabTestHistory"
+import LabTestDetail from "./screens/LabTestDetail"
+
 import ContactUs from "./screens/ContactUs";
 
 const headerStyle = { 
@@ -152,6 +155,27 @@ export const SurveyHistoryStack = StackNavigator({
     },
 });
 
+export const LabTestHistoryStack = StackNavigator({
+    LabTestHistory: { 
+        screen: LabTestHistory, 
+        navigationOptions: ({ navigation }) => ({
+            headerTitle: <HeaderTitle/>,
+            headerStyle: headerStyle,
+            headerLeft: <MenuIcon {...navigation} />,
+            headerRight: <EmptyIcon/>
+        }),
+    },
+    LabTestDetail: { 
+        screen: LabTestDetail, 
+        navigationOptions: ({ navigation }) => ({
+            headerTitle: <HeaderTitle/>,
+            headerStyle: headerStyle,
+            headerLeft: <BackIcon {...navigation} />,
+            headerRight: <EmptyIcon/>
+        }),
+    },
+});
+
 export const ContactUsStack = StackNavigator({
     ContactUs: { 
         screen: ContactUs, 
@@ -170,6 +194,7 @@ export const DrawerStack = DrawerNavigator(
         SkipSurveyStack: { screen: SkipSurveyStack },
         SurveyHistoryStack: { screen: SurveyHistoryStack },
         ContactUsStack: { screen: ContactUsStack },
+        LabTestHistoryStack: { screen: LabTestHistoryStack },
     },
     {
         drawerWidth: width * 3 / 5,
