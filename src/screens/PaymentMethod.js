@@ -11,6 +11,7 @@ import {Images, Colors} from '../theme'
 import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 import { MyText } from "../components";
 import { Dropdown } from 'react-native-material-dropdown';
+import { strings, localePre } from '@i18n';
 
 export default class PaymentMethod extends Component {
     constructor(props){
@@ -25,7 +26,7 @@ export default class PaymentMethod extends Component {
 
     onConfirm() {
         if(this.state.paymentMethod == -1) {
-            alert('Select a payment method')
+            alert(strings('Please select a payment method'))
             return
         }
         const {navigate, state: {params}} = this.props.navigation
@@ -50,9 +51,9 @@ export default class PaymentMethod extends Component {
         return (
         <Container>
             <Content contentContainerStyle={styles.container}>
-                <Dropdown label='Payment Method' data={data} dropdownPosition={0} onChangeText={(value, index, data)=>{this.setState({paymentMethod: index})}}/>
-                <Button block primary onPress={this.onConfirm.bind(this)}><Text>Confirm and Schedual Pick up</Text></Button>
-                <Button block transparent danger onPress={this.onCancel.bind(this)}><Text>Cancel</Text></Button>
+                <Dropdown label={strings('Payment Method')} data={data} dropdownPosition={0} onChangeText={(value, index, data)=>{this.setState({paymentMethod: index})}}/>
+                <Button block primary onPress={this.onConfirm.bind(this)}><Text>{strings('Confirm and schedual pick up')}</Text></Button>
+                <Button block transparent danger onPress={this.onCancel.bind(this)}><Text>{strings('Cancel')}</Text></Button>
             </Content>
         </Container>
         );

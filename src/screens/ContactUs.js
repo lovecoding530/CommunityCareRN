@@ -12,6 +12,7 @@ import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimen
 import { MyText, Loader } from "../components";
 import API from '../components/Api'
 import AppData from '../components/AppData'
+import { strings } from '@i18n';
 
 export default class ContactUs extends Component {
     constructor(props){
@@ -72,7 +73,7 @@ export default class ContactUs extends Component {
                     <Image source={Images.message} style={[styles.infoIcon, {alignSelf: 'flex-start'}]}/>
                     <Form style={styles.form}>
                         <Textarea rowSpan={5} bordered placeholder="" onChangeText={message => this.setState({message})}/>
-                        <Button block primary style={{marginVertical: 8}} onPress={this.onMessage.bind(this)}><Text>Send</Text></Button>
+                        <Button block primary style={{marginVertical: 8}} onPress={this.onMessage.bind(this)}><Text>{strings('Send')}</Text></Button>
                     </Form>
                 </View>
             </Content>

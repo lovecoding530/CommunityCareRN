@@ -15,6 +15,7 @@ import { MyText, Loader, ManyChoices } from "../components";
 import Utils from "../components/utils";
 import API from '../components/Api'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { strings, localePre } from '@i18n';
 
 export default class SurveyDetail extends Component {
 
@@ -56,7 +57,6 @@ export default class SurveyDetail extends Component {
     }
 
     renderQuestionItem({item, index}) {
-        var localePre = 'e'
         var title = item.question[`${localePre}title`]
 
         var renderAnswers = []
@@ -66,7 +66,7 @@ export default class SurveyDetail extends Component {
             if (value == '') break
 
             renderAnswers.push(
-                <View style={styles.answer_wrapper}>
+                <View key={key} style={styles.answer_wrapper}>
                     <MyText style={{flex: 1}}>{value}</MyText>
                     {item.answers.includes(index-1) &&
                         <Icon name={'check'} color={Colors.Navy}/>

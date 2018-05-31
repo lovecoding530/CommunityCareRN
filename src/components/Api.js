@@ -129,6 +129,12 @@ async function deleteOrder(orderID){
     return await postJSON(url, null)
 }
 
+async function updateOrder(orderID, date, time, coordinate){
+    var user = await AppData.getItem('login_user')
+    var url = `${API_ROOT}/Order/UpdateOrderDate?OrderID=${orderID}&OrderDate=${date} ${time}:00.000&Longitude=${coordinate.longitude}&Latitude=${coordinate.latitude}&UserID=${user.clientID}`
+    return await postJSON(url, null)
+}
+
 async function getContactInfo(){
     var url = `${API_ROOT}/Info/GetContactInfo`
     return await getJSON(url)
@@ -139,6 +145,11 @@ async function sendContactMessage(message){
     var url = `${API_ROOT}/Info/query?UserID=${user.clientID}&Message=${message}`
     console.log(url)
     return await postJSON(url, null)
+}
+
+async function getAgreement(){
+    var url = `${API_ROOT}/Agreement/GetAgreement`
+    return await getJSON(url)
 }
 
 export default { 
@@ -158,6 +169,8 @@ export default {
     deleteSurveyEnrollment,
     getAllUserOrders,
     deleteOrder,
+    updateOrder,
     getContactInfo,
     sendContactMessage,
+    getAgreement,
 }

@@ -12,6 +12,7 @@ import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimen
 import { MyText, Loader } from "../components";
 import API from '../components/Api'
 import AppData from '../components/AppData'
+import { strings } from '@i18n';
 
 export default class Login extends Component {
     constructor(props){
@@ -58,22 +59,22 @@ export default class Login extends Component {
         <Container>
             <Loader loading={this.state.loaderVisible}/>
             <Content contentContainerStyle={styles.container}>
-                <MyText mediumLarge bold center>Log in </MyText>
+                <MyText mediumLarge bold center>{strings('Sign in')} </MyText>
                 <Form style={styles.form}>
                     <Item floatingLabel last>
-                        <Label>Username</Label>
+                        <Label>{strings('Email')}</Label>
                         <Input autoCapitalize='none' autoCorrect={false} value={this.state.email} onChangeText={text=>this.setState({email: text})}/>
                     </Item>
                     <Item floatingLabel last>
-                        <Label>Password</Label>
+                        <Label>{strings('Password')}</Label>
                         <Input secureTextEntry={true} value={this.state.password} onChangeText={text=>this.setState({password: text})}/>
                     </Item>
                 </Form>
-                <Button block primary onPress={this.onLogin.bind(this)}><Text>Sign In</Text></Button>
-                <Button block transparent danger onPress={this.onForgotPassword.bind(this)}><Text>Forgot Password</Text></Button>
+                <Button block primary onPress={this.onLogin.bind(this)}><Text>{strings('Sign in')}</Text></Button>
+                <Button block transparent danger onPress={this.onForgotPassword.bind(this)}><Text>{strings('Forgot Password')}</Text></Button>
             </Content>
             <Footer style={styles.footer}>
-                <Button block transparent danger onPress={this.onSignup.bind(this)}><MyText medium>Don't you have acount?</MyText><Text>Sign up</Text></Button>        
+                <Button block transparent danger onPress={this.onSignup.bind(this)}><MyText medium>{strings("Don't you have acount?")}</MyText><Text>{strings('Sign up')}</Text></Button>
             </Footer>
         </Container>
         );

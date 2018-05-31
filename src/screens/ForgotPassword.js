@@ -11,6 +11,7 @@ import {Images, Colors} from '../theme'
 import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 import { MyText, Loader } from "../components";
 import API from '../components/Api'
+import { strings } from '@i18n';
 
 export default class ForgotPassword extends Component {
     constructor(props){
@@ -54,14 +55,14 @@ export default class ForgotPassword extends Component {
         <Container>
             <Loader loading={this.state.loaderVisible}/>
             <Content contentContainerStyle={styles.container}>
-                <MyText mediumLarge bold center>Forgot Password</MyText>
+                <MyText mediumLarge bold center>{strings('Forgot Password')}</MyText>
                 <Form style={styles.form}>
                     <Item floatingLabel last>
-                        <Label>Email</Label>
+                        <Label>{strings('Email')}</Label>
                         <Input autoCapitalize='none' autoCorrect={false} value={this.state.email} onChangeText={text=>this.setState({email: text})}/>
                     </Item>
                 </Form>
-                <Button block primary onPress={this.onResetPassword.bind(this)}><Text>Reset Password</Text></Button>
+                <Button block primary onPress={this.onResetPassword.bind(this)}><Text>{strings('Reset Password')}</Text></Button>
                 <Button block transparent danger onPress={this.goBack.bind(this)}><Text>{"< "}Back to log in</Text></Button>
             </Content>
         </Container>

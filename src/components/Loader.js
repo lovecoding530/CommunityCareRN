@@ -9,6 +9,8 @@ import Spinner from "react-native-spinkit";
 import {Colors} from '@theme';
 import Text from "./Text";
 import { responsiveWidth } from 'react-native-responsive-dimensions';
+import { strings } from '@i18n';
+
 const Loader = props => {
     const {
         loading,
@@ -24,7 +26,7 @@ const Loader = props => {
             <View style={styles.modalBackground}>
                 <View style={styles.activityIndicatorWrapper}>
                     <Spinner isVisible={loading} size={responsiveWidth(10)} type='Circle'/>
-                    <Text medium>Please wait</Text>
+                    <Text medium>{strings('Please wait')}</Text>
                 </View>
             </View>
         </Modal>
@@ -41,12 +43,12 @@ const styles = StyleSheet.create({
 
     activityIndicatorWrapper: {
         backgroundColor: '#FFFFFF',
-        height: responsiveWidth(26),
-        width: responsiveWidth(26),
+        height: responsiveWidth(27),
         borderRadius: 5,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-around'
+        justifyContent: 'space-between',
+        padding: 16,
     }
 });
 

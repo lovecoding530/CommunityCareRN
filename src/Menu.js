@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StatusBar, StyleSheet, Image} from 'react-native';
 import {Colors, Images} from './theme';
 import { Container, Content, Button, Icon, Form, Item, Label, Input, Text, List, ListItem} from 'native-base';
+import { strings } from '@i18n';
 
 export default class Menu extends Component {
     goto(key){
@@ -20,22 +21,22 @@ export default class Menu extends Component {
                     </View>
                     <List>
                         <ListItem onPress={()=>{this.goto('QuickSurveyStack')}}>
-                            <Text>Quick Survey</Text>
+                            <Text>{strings("Quick Survey")}</Text>
                         </ListItem>
                         <ListItem onPress={()=>{this.goto('SkipSurveyStack')}}>
-                            <Text>Skip Survey</Text>
+                            <Text>{strings("Skip Survey")}</Text>
                         </ListItem>
                         <ListItem onPress={()=>{this.goto('SurveyHistoryStack')}}>
-                            <Text>History of Your Surveys</Text>
+                            <Text>{strings("History of Your Surveys")}</Text>
                         </ListItem>
                         <ListItem onPress={()=>{this.goto('LabTestHistoryStack')}}>
-                            <Text>History of Your Lab Tests</Text>
+                            <Text>{strings("History of Your Lab Tests")}</Text>
                         </ListItem>
                         <ListItem onPress={()=>{this.goto('ContactUsStack')}}>
-                            <Text>Contact Us</Text>
+                            <Text>{strings("Contact Us")}</Text>
                         </ListItem>
                         <ListItem onPress={()=>{console.log("Log out")}}>
-                            <Text>Log out</Text>
+                            <Text>{strings("Log out")}</Text>
                         </ListItem>
                     </List>
                 </Content>

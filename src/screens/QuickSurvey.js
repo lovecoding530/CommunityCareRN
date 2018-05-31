@@ -14,6 +14,7 @@ import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimen
 import { MyText, Loader, ManyChoices } from "../components";
 import Utils from "../components/utils";
 import API from '../components/Api'
+import { strings, localePre } from '@i18n';
 
 export default class QuickSurvey extends Component {
 
@@ -44,11 +45,11 @@ export default class QuickSurvey extends Component {
 
     onSkip() {
         Alert.alert(
-            'Are you sure?',
-            'Are you sure to skip the survey?',
+            strings('Are you sure?'),
+            strings('Are you sure to skip the survey?'),
             [
-                {text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {text: 'YES', onPress: async () => {
+                {text: strings('No'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: strings('Yes'), onPress: async () => {
                 }},
             ],
             { cancelable: false }
@@ -57,11 +58,11 @@ export default class QuickSurvey extends Component {
 
     onFinish(){
         Alert.alert(
-            'Are you sure?',
-            'Are you sure to finish the survey?',
+            strings('Are you sure?'),
+            strings('Are you sure to finish the survey?'),
             [
-                {text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {text: 'YES', onPress: () => { this.finishSurvey() }},
+                {text: strings('No'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: strings('Yes'), onPress: () => { this.finishSurvey() }},
             ],
             { cancelable: false }
         )
@@ -71,20 +72,24 @@ export default class QuickSurvey extends Component {
         this.setState({loaderVisible: true})
         const response = await API.postSurveyAnswer(this.state.questions)
         this.setState({loaderVisible: false})
-
+        console.log(response)
         setTimeout(() => {
-            Alert.alert(
-                'Survey is completed',
-                `Recommended test is :\n${response}`,
-                [
-                    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                    {text: 'OK', onPress: () => {
-                        const {navigate} = this.props.navigation
-                        navigate('PaymentMethod', {recommendTest: response})
-                    }},
-                ],
-                { cancelable: false }
-            )
+            if(response.Message == null){
+                Alert.alert(
+                    strings('Survey is completed'),
+                    `${strings('Recommended test is :')}\n${response}`,
+                    [
+                        {text: strings('Cancel'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                        {text: strings('OK'), onPress: () => {
+                            const {navigate} = this.props.navigation
+                            navigate('PaymentMethod', {recommendTest: response})
+                        }},
+                    ],
+                    { cancelable: false }
+                )
+            }else{
+                alert(response.Message)
+            }
         }, 500);
     }
 
@@ -95,7 +100,6 @@ export default class QuickSurvey extends Component {
     }
 
     renderQuestionItem({item, index}) {
-        var localePre = 'e'
         var title = item[`${localePre}title`]
         var choices = []
         var many = item.qType == 2
@@ -125,15 +129,15 @@ export default class QuickSurvey extends Component {
         <Container>
             <Loader loading={this.state.loaderVisible}/>
             <Content contentContainerStyle={styles.container}>
-                <MyText medium bold center style={styles.surveyTitle}>{this.state.surveyName}</MyText>
+                <MyText medium bold center style={styles.surveyTitle}>{strings(this.state.surveyName)}</MyText>
                 <FlatList
                     data={this.state.questions}
                     renderItem = {this.renderQuestionItem.bind(this)}
                     keyExtractor = {(item, index) => index.toString()}
                 />
                 <Row style={styles.buttonBar}>
-                    <Button bordered danger onPress={this.onSkip.bind(this)}><Text>   Skip   </Text></Button>
-                    <Button primary onPress={this.onFinish.bind(this)}><Text>   Finish   </Text></Button>
+                    <Button bordered danger onPress={this.onSkip.bind(this)}><Text>{strings('Skip')}</Text></Button>
+                    <Button primary onPress={this.onFinish.bind(this)}><Text>{strings('Finish')}</Text></Button>
                 </Row>
             </Content>
         </Container>
@@ -141,7 +145,7 @@ export default class QuickSurvey extends Component {
     }
 }
   
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 16,
         backgroundColor: Colors.backgroundPrimary,

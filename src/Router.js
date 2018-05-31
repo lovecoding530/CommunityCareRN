@@ -174,6 +174,15 @@ export const LabTestHistoryStack = StackNavigator({
             headerRight: <EmptyIcon/>
         }),
     },
+    TimeAndLocation: {
+        screen: TimeAndLocation, 
+        navigationOptions: ({ navigation }) => ({
+            headerTitle: <HeaderTitle/>,
+            headerStyle: headerStyle,
+            headerLeft: <BackIcon {...navigation} />,
+            headerRight: <EmptyIcon/>
+        }),
+    },
 });
 
 export const ContactUsStack = StackNavigator({

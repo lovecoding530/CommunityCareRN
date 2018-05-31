@@ -11,6 +11,7 @@ import {Images, Colors} from '../theme'
 import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 import { MyText, Loader } from "../components";
 import API from '../components/Api'
+import { strings } from '@i18n';
 
 export default class ResetPassword extends Component {
     constructor(props){
@@ -77,22 +78,22 @@ export default class ResetPassword extends Component {
         <Container>
             <Loader loading={this.state.loaderVisible}/>
             <Content contentContainerStyle={styles.container}>
-                <MyText mediumLarge bold center>Reset Password</MyText>
+                <MyText mediumLarge bold center>{strings('Reset Password')}</MyText>
                 <Form style={styles.form}>
                     <Item floatingLabel last>
-                        <Label>Password</Label>
+                        <Label>{strings('Password')}</Label>
                         <Input secureTextEntry={true} value={this.state.password} onChangeText={text=>this.setState({password: text})}/>
                     </Item>
                     <Item floatingLabel last>
-                        <Label>Confirm Password</Label>
+                        <Label>{strings('Confirm Password')}</Label>
                         <Input secureTextEntry={true} value={this.state.confirmPassword} onChangeText={text=>this.setState({confirmPassword: text})}/>
                     </Item>
                     <Item floatingLabel last>
-                        <Label>Verification Code</Label>
+                        <Label>{strings('Verification Code')}</Label>
                         <Input autoCapitalize='none' autoCorrect={false} value={this.state.verificationCode} onChangeText={text=>this.setState({verificationCode: text})}/>
                     </Item>
                 </Form>
-                <Button block primary onPress={this.onUpdate.bind(this)}><Text>Reset Password</Text></Button>
+                <Button block primary onPress={this.onUpdate.bind(this)}><Text>{strings('Reset Password')}</Text></Button>
                 <Button block transparent danger onPress={this.goBack.bind(this)}><Text>{"< "}Back to forgot password</Text></Button>
             </Content>
         </Container>

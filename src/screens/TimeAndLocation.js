@@ -17,78 +17,125 @@ import MapView, {Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Utils from '../components/utils'
 import Api from '../components/Api';
 import moment from 'moment'
+import { strings, localePre } from '@i18n';
 
 export default class TimeAndLocation extends Component {
     constructor(props){
         super(props)
-        this.state = {
-            loaderVisible: false,
-            date: moment().format("YYYY-MM-DD"),
-            time: moment().format("HH:mm"),
-            coordinate: null,
-            region: {
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
+        const {state: {params}} = this.props.navigation
+        const editingOrder = params.order
+        if(editingOrder == null){
+            this.state = {
+                editingOrder,
+                loaderVisible: false,
+                date: moment().format("YYYY-MM-DD"),
+                time: moment().format("HH:mm"),
+                coordinate: null,
+                region: {
+                    latitude: 37.78825,
+                    longitude: -122.4324,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }
+            }    
+        }else{
+            this.state = {
+                editingOrder,
+                loaderVisible: false,
+                date: moment(editingOrder.orderDate).format("YYYY-MM-DD"),
+                time: moment(editingOrder.orderDate).format("HH:mm"),
+                coordinate: {
+                    latitude: editingOrder.latitude,
+                    longitude: editingOrder.longitude
+                },
+                region: {
+                    latitude: editingOrder.latitude,
+                    longitude: editingOrder.longitude,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }
             }
         }
     }
     
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            (location) => {
-                console.log(location)
-
-                var coordinate = {
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                }
-
-                var region = Utils.copy(this.state.region)
-
-                region.latitude = coordinate.latitude
-                region.longitude = coordinate.longitude
-                this.setState({
-                    coordinate: coordinate,
-                    region: region,
-                })
-            },
-            (error) => alert(error.message),
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-         )
+        if(this.state.editingOrder == null){
+            navigator.geolocation.getCurrentPosition(
+                (location) => {
+                    console.log(location)
+    
+                    var coordinate = {
+                        latitude: location.coords.latitude,
+                        longitude: location.coords.longitude,
+                    }
+    
+                    var region = Utils.copy(this.state.region)
+    
+                    region.latitude = coordinate.latitude
+                    region.longitude = coordinate.longitude
+                    this.setState({
+                        coordinate: coordinate,
+                        region: region,
+                    })
+                },
+                (error) => alert(error.message),
+                { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+            )
+        }
     }
 
     async onConfirm() {
-        const {navigate, state: {params}} = this.props.navigation
-        this.setState({loaderVisible: true})
-        var res 
-        if(params.recommendTest != null){
-            res = await Api.createOrderBySurveyRecomendation(
-                this.state.date, this.state.time, 
-                this.state.coordinate, 
-                params.paymentMethod, 
-                params.recommendTest)
+        if(this.state.editingOrder == null){
+            const {navigate, state: {params}} = this.props.navigation
+            this.setState({loaderVisible: true})
+            var res 
+            if(params.recommendTest != null){
+                res = await Api.createOrderBySurveyRecomendation(
+                    this.state.date, this.state.time, 
+                    this.state.coordinate, 
+                    params.paymentMethod, 
+                    params.recommendTest)
+            }else{
+                res = await Api.createOrderByItems(
+                    this.state.date, this.state.time, 
+                    this.state.coordinate, 
+                    params.paymentMethod, 
+                    params.labTestIDs)
+            }
+            console.log('createOrderByItems', res)
+            this.setState({loaderVisible: false})
+            
+            setTimeout(() => {
+                if(res == true){
+                    Alert.alert(
+                        strings('Thank you for your select Community Health Care.'),
+                        strings('You will receive the order confirmation on your email.'),
+                        [
+                            {text: strings('OK')},
+                        ],
+                        { cancelable: false }
+                    )    
+                }else{
+                    alert('Failed to order')
+                }
+            }, 500);
         }else{
-            res = await Api.createOrderByItems(
-                this.state.date, this.state.time, 
-                this.state.coordinate, 
-                params.paymentMethod, 
-                params.labTestIDs)
-        }
-        console.log('createOrderByItems', res)
-        this.setState({loaderVisible: false})
+            const {goBack, state: {params}} = this.props.navigation
+            this.setState({loaderVisible: true})
+            let res = await Api.updateOrder(this.state.editingOrder.orderID, this.state.date, this.state.time, this.state.coordinate)
+            console.log('updateOrder', res)
+            this.setState({loaderVisible: false})
 
-        setTimeout(() => {
-            Alert.alert(
-                'Thank you for your select Community Health Care.',
-                'You will receive the order confirmation on your email.',
-                [
-                    {text: 'OK'},
-                ],
-                { cancelable: false }
-            )
-        }, 500);
+            setTimeout(() => {
+                if(res == true){
+                    alert('Successfully updated the order') 
+                    params.callback(true)
+                }else{
+                    alert('Failed to delete the order')     
+                    params.callback(false)
+                }
+            }, 500);
+        }
     }
 
     goBack() {
@@ -181,8 +228,8 @@ export default class TimeAndLocation extends Component {
                     </MapView>
                 </View>
                 <View style={styles.buttonBar}>
-                    <Button bordered danger onPress={this.goBack.bind(this)}><Text>Cancel</Text></Button>
-                    <Button primary onPress={this.onConfirm.bind(this)}><Text>Confirm</Text></Button>
+                    <Button bordered danger onPress={this.goBack.bind(this)}><Text>{strings('Cancel')}</Text></Button>
+                    <Button primary onPress={this.onConfirm.bind(this)}><Text>{strings('Confirm')}</Text></Button>
                 </View>
             </Content>
         </Container>

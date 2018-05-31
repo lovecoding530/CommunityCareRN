@@ -17,6 +17,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import Utils from "../components/utils";
 import API from '../components/Api';
 import moment from 'moment';
+import { strings, localePre } from '@i18n';
 
 export default class LabTestHistory extends Component {
     constructor(props){
@@ -67,7 +68,13 @@ export default class LabTestHistory extends Component {
     }
     
     onEdit(order){
-
+        const {navigate} = this.props.navigation
+        navigate('TimeAndLocation', {order, callback: async (updated)=>{
+            if(updated){
+                const orders = await API.getAllUserOrders()
+                this.setState({orders})
+            }
+        }})
     }
 
     renderItem({item, index}) {
@@ -95,6 +102,7 @@ export default class LabTestHistory extends Component {
         <Container>
             <Loader loading={this.state.loaderVisible}/>
             <Content contentContainerStyle={styles.container}>
+                <MyText medium bold center style={{marginVertical: 16,}}>{strings('History of Your Lab Tests')}</MyText>
                 <FlatList
                     data={this.state.orders}
                     renderItem = {this.renderItem.bind(this)}
@@ -108,7 +116,6 @@ export default class LabTestHistory extends Component {
   
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: 24,
         backgroundColor: Colors.backgroundPrimary,
         flex: 1,
     },

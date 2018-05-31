@@ -12,6 +12,7 @@ import {Images, Colors} from '../theme'
 import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 import { MyText, Loader } from "../components";
 import API from '../components/Api'
+import { strings } from '@i18n';
 
 export default class Signup extends Component {
     constructor(props){
@@ -108,29 +109,29 @@ export default class Signup extends Component {
         <Container>
             <Loader loading={this.state.loaderVisible}/>
             <Content contentContainerStyle={styles.container}>
-                <MyText mediumLarge bold center>Sign Up </MyText>
+                <MyText mediumLarge bold center>{strings('Sign up')}</MyText>
                 <Form style={styles.form}>
                     <Item floatingLabel last>
-                        <Label>Username</Label>
+                        <Label>{strings('Email')}</Label>
                         <Input autoCapitalize='none' autoCorrect={false} value={this.state.email} onChangeText={text=>this.setState({email: text})}/>
                     </Item>
                     <Item floatingLabel last>
-                        <Label>Password</Label>
+                        <Label>{strings('Password')}</Label>
                         <Input secureTextEntry={true} value={this.state.password} onChangeText={text=>this.setState({password: text})}/>
                     </Item>
                     <Item floatingLabel last>
-                        <Label>Confirm Password</Label>
+                        <Label>{strings('Confirm Password')}</Label>
                         <Input secureTextEntry={true} value={this.state.confirmPassword} onChangeText={text=>this.setState({confirmPassword: text})}/>
                     </Item>
                 </Form>
                 <ListItem>
                     <CheckBox checked={this.state.isCheckedAgreement} onPress={()=>this.setState({isCheckedAgreement: !this.state.isCheckedAgreement})}/>
                     <Body style={styles.checkboxBody}>
-                        <Text style={{marginRight: 0}}>I accept the </Text>
-                        <Button transparent color={Colors.Navy} onPress={this.onAgreement.bind(this)}><Text>Agreement</Text></Button>
+                        <Text style={{marginRight: 0}}>{strings('I accept the')}</Text>
+                        <Button transparent color={Colors.Navy} onPress={this.onAgreement.bind(this)}><Text>{strings('Agreement')}</Text></Button>
                     </Body>
                 </ListItem>
-                <Button block primary onPress={this.onSignup.bind(this)}><Text>Sign Up</Text></Button>
+                <Button block primary onPress={this.onSignup.bind(this)}><Text>{strings('Sign up')}</Text></Button>
                 <Button block transparent danger onPress={this.goBack.bind(this)}><Text>{"< "}Back to log in</Text></Button>
             </Content>
         </Container>

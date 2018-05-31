@@ -17,6 +17,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import Utils from "../components/utils";
 import API from '../components/Api';
 import moment from 'moment';
+import { strings, localePre } from '@i18n';
 
 export default class SurveyHistory extends Component {
     constructor(props){
@@ -80,6 +81,7 @@ export default class SurveyHistory extends Component {
         <Container>
             <Loader loading={this.state.loaderVisible}/>
             <Content contentContainerStyle={styles.container}>
+                <MyText medium bold center style={{marginVertical: 16,}}>{strings('History of Your Surveys')}</MyText>
                 <FlatList
                     data={this.state.surveys}
                     renderItem = {this.renderItem.bind(this)}
@@ -93,9 +95,8 @@ export default class SurveyHistory extends Component {
   
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: 24,
         backgroundColor: Colors.backgroundPrimary,
-        flex: 1,
+        flexGrow: 1,
     },
 
 });

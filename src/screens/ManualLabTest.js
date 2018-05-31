@@ -16,6 +16,7 @@ import { MyText, Loader, ManyChoices } from "../components";
 import { Dropdown } from 'react-native-material-dropdown';
 import Utils from "../components/utils";
 import API from '../components/Api'
+import { strings, localePre } from '@i18n';
 
 export default class ManualLabTest extends Component {
     constructor(props){
@@ -30,7 +31,6 @@ export default class ManualLabTest extends Component {
     }
 
     async componentDidMount() {
-        var localePre = 'e'
         this.setState({loaderVisible: true})
         const bloodTests = await API.getBloodTests()
         var dropdownValues = bloodTests.map((test) => {
@@ -88,7 +88,6 @@ export default class ManualLabTest extends Component {
     }
 
     renderLabTestItem({item, index}) {
-        var localePre = 'e'
         var bloodTest = this.state.bloodTests[item]
         return (
             <Card>
@@ -118,7 +117,7 @@ export default class ManualLabTest extends Component {
             console.log(totalPrice)
             return (
                 <View style={{flexDirection: 'row', paddingVertical: 8, paddingHorizontal: 36, alignItems: 'center'}}>
-                    <MyText right medium style={{flex: 1}}>Total: </MyText>
+                    <MyText right medium style={{flex: 1}}>{strings('Total:')} </MyText>
                     <View style={styles.priceView}>
                         <Image source={Images.dollar} style={styles.dollarIcon}/>
                         <MyText light style={styles.priceText}>{totalPrice}</MyText>
@@ -139,7 +138,7 @@ export default class ManualLabTest extends Component {
             <Content contentContainerStyle={styles.container}>
                 <View style={styles.dropdownWrapper}>
                     <Dropdown 
-                        label='Lab Test' 
+                        label={strings('Select a Lab Test')}
                         data={this.state.dropdownValues} 
                         dropdownPosition={0} 
                         itemCount={5} 
@@ -154,11 +153,11 @@ export default class ManualLabTest extends Component {
                     renderItem = {this.renderLabTestItem.bind(this)}
                     keyExtractor = {(item, index) => index.toString()}
                     ListFooterComponent = {this.renderListFooter.bind(this)}
-                    ListEmptyComponent = {<MyText center medium style={{marginVertical: 8,}}>No selected lab tests</MyText>}
+                    ListEmptyComponent = {<MyText center medium style={{marginVertical: 8,}}>{strings('No selected lab tests')}</MyText>}
                 />
                 <View style={styles.buttonBar}>
-                    <Button bordered danger onPress={this.onCancel.bind(this)}><Text>   Cancel   </Text></Button>
-                    <Button primary onPress={this.onProceed.bind(this)}><Text>   Proceed   </Text></Button>
+                    <Button bordered danger onPress={this.onCancel.bind(this)}><Text>{strings('Cancel')}</Text></Button>
+                    <Button primary onPress={this.onProceed.bind(this)}><Text>{strings('Proceed')}</Text></Button>
                 </View>
             </Content>
         </Container>
