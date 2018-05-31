@@ -206,6 +206,7 @@ export const DrawerStack = DrawerNavigator(
         LabTestHistoryStack: { screen: LabTestHistoryStack },
     },
     {
+        initialRouteName: "SurveyHistoryStack",
         drawerWidth: width * 2 / 3,
         drawerPosition: 'left',
         contentComponent: props => <Menu {...props} />

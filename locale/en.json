@@ -51,7 +51,7 @@
     "Signing in": "Signing in",
     "CommCare": "CommCare",
     "OK": "OK",
-    "Aleady Added": "Aleady Added",
+    "Aleady added": "Aleady added",
     "Please add a lab test": "Please add a lab test",
     "Are you sure to cancel the Lab Test?": "Are you sure to cancel the Lab Test?",
     "Yes": "Yes",
@@ -84,5 +84,6 @@
     "Proceed": "Proceed",
     "Order ID": "Order ID",
     "Order Time": "Order Time",
-    "Accept": "Accept"
+    "Accept": "Accept", 
+    "Are you sure to log out?": "Are you sure to log out?"
 }

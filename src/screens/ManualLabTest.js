@@ -45,18 +45,9 @@ export default class ManualLabTest extends Component {
         goBack()
     }
 
-    onCancel() {
-        Alert.alert(
-            'Are you sure?',
-            'Are you sure to skip the survey?',
-            [
-                {text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {text: 'YES', onPress: async () => {
-                    this.goBack()
-                }},
-            ],
-            { cancelable: false }
-        )
+    onSurvey() {
+        const {navigate, goBack} = this.props.navigation
+        navigate('QuickSurveyStack')
     }
 
     onProceed(){
@@ -67,11 +58,11 @@ export default class ManualLabTest extends Component {
 
     onAdd() {
         if (this.state.selectedLabTestIndex == -1) {
-            alert('Select a lab test')
+            alert(strings('Select a Lab Test'))
             return
         }
         if (this.state.selectedLabTests.includes(this.state.selectedLabTestIndex)){
-            alert('Already added the lab test')
+            alert(strings('Aleady added'))
             return
         }
         var selectedLabTests = Utils.copy(this.state.selectedLabTests)
@@ -156,7 +147,7 @@ export default class ManualLabTest extends Component {
                     ListEmptyComponent = {<MyText center medium style={{marginVertical: 8,}}>{strings('No selected lab tests')}</MyText>}
                 />
                 <View style={styles.buttonBar}>
-                    <Button bordered danger onPress={this.onCancel.bind(this)}><Text>{strings('Cancel')}</Text></Button>
+                    <Button bordered danger onPress={this.onSurvey.bind(this)}><Text>{strings('Quick Survey')}</Text></Button>
                     <Button primary onPress={this.onProceed.bind(this)}><Text>{strings('Proceed')}</Text></Button>
                 </View>
             </Content>

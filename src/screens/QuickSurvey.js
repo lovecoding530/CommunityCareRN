@@ -44,12 +44,14 @@ export default class QuickSurvey extends Component {
     }
 
     onSkip() {
+        const {navigate, goBack} = this.props.navigation
         Alert.alert(
             strings('Are you sure?'),
             strings('Are you sure to skip the survey?'),
             [
                 {text: strings('No'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                 {text: strings('Yes'), onPress: async () => {
+                    navigate("SkipSurveyStack")
                 }},
             ],
             { cancelable: false }

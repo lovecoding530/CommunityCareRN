@@ -51,7 +51,7 @@
     "Signing in": "تسجيل دخول",
     "CommCare": "CommCare",
     "OK": "موافق",
-    "Aleady Added": "تم اضافته من قبل",
+    "Aleady added": "تم اضافته من قبل",
     "Please add a lab test": "فضلا أضف فحص مخبري",
     "Are you sure to cancel the Lab Test?": "هل انت متأكد من الغاء هذا الفحص؟",
     "Yes": "نعم",
@@ -84,5 +84,6 @@
     "Proceed": "تقدم",
     "Order ID": "رقم التعريف الخاص بالطلب",
     "Order Time": "وقت الطلب",
-    "Accept": "أنا أتفق"
+    "Accept": "أنا أتفق",
+    "Are you sure to log out?": "هل أنت متأكد من تسجيل الخروج؟"
 }
