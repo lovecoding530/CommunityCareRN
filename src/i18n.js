@@ -25,6 +25,7 @@ export const localePre = currentLocale.charAt(0)
 
 // Is it a RTL language?
 export const isRTL = currentLocale.indexOf('he') === 0 || currentLocale.indexOf('ar') === 0;
+console.log('isRTL', isRTL)
 
 // Allow RTL alignment in RTL languages
 ReactNative.I18nManager.allowRTL(isRTL);

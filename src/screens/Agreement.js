@@ -47,11 +47,9 @@ export default class Agreement extends Component {
             <Loader loading={this.state.loaderVisible}/>
             <Content contentContainerStyle={styles.container}>
                 <MyText mediumLarge bold center>{strings('Agreement')}</MyText>
-                <Form style={styles.form}>
-                    <Textarea 
-                        editable={false} bordered placeholder="" value={this.state.agreement[`${localePre}agreement`]}
-                        style={styles.textArea}/>
-                </Form>
+                <Text style={styles.agreementText}>
+                    {this.state.agreement[`${localePre}agreement`]}
+                </Text>
                 <Button block primary onPress={this.onAccept.bind(this)}><Text>{strings('Accept')}</Text></Button>
                 <Button block transparent danger onPress={this.goBack.bind(this)}><Text>{"< "}Back to sign up</Text></Button>
             </Content>
@@ -62,7 +60,7 @@ export default class Agreement extends Component {
   
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
+      flexGrow: 1,
       padding: 24,
       paddingTop: responsiveHeight(5),
       backgroundColor: Colors.backgroundPrimary,
@@ -74,12 +72,17 @@ const styles = StyleSheet.create({
     },
 
     form: {
+        flexGrow: 1,
         marginVertical: 24,
     },
 
-    textArea: {
+    agreementText: {
         textAlign: 'center',
-        height: responsiveHeight(60)
+        marginVertical: 8,
+        padding: 8,
+        borderWidth: 1,
+        borderColor: Colors.Navy,
+        borderRadius: 2,
     }
 });
   
