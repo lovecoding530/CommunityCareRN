@@ -11,6 +11,7 @@ const { width } = Dimensions.get('window');
 import {Colors, Images} from './theme';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Menu from "./Menu";
+import StaffMenu from "./StaffMenu";
 
 import Splash from "./screens/Splash";
 import Login from "./screens/Login";
@@ -30,6 +31,8 @@ import SurveyDetail from "./screens/SurveyDetail";
 
 import LabTestHistory from "./screens/LabTestHistory"
 import LabTestDetail from "./screens/LabTestDetail"
+
+import StaffOrders from "./screens/StaffOrders"
 
 import ContactUs from "./screens/ContactUs";
 
@@ -213,10 +216,43 @@ export const DrawerStack = DrawerNavigator(
     }
 );
 
+export const StaffOrdersStack = StackNavigator({
+    StaffOrders: { 
+        screen: StaffOrders, 
+        navigationOptions: ({ navigation }) => ({
+            headerTitle: <HeaderTitle/>,
+            headerStyle: headerStyle,
+            headerLeft: <MenuIcon {...navigation} />,
+            headerRight: <EmptyIcon/>
+        }),
+    },
+    LabTestDetail: { 
+        screen: LabTestDetail, 
+        navigationOptions: ({ navigation }) => ({
+            headerTitle: <HeaderTitle/>,
+            headerStyle: headerStyle,
+            headerLeft: <BackIcon {...navigation} />,
+            headerRight: <EmptyIcon/>
+        }),
+    },
+});
+
+export const StaffDrawerStack = DrawerNavigator(
+    {
+        StaffOrdersStack: { screen: StaffOrdersStack },
+    },
+    {
+        drawerWidth: width * 2 / 3,
+        drawerPosition: 'left',
+        contentComponent: props => <StaffMenu {...props} />
+    }
+);
+
 export const PrimaryNav = StackNavigator({
     SplashScreen: { screen: Splash },
     LoginStack: { screen: LoginStack }, 
     DrawerStack: { screen: DrawerStack }, 
+    StaffDrawerStack: { screen: StaffDrawerStack },
 }, {
     headerMode: 'none',
 })

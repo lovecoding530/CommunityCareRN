@@ -20,7 +20,11 @@ export default class Splash extends Component {
             if(user == null)
                 navigate('LoginStack')
             else{
-                navigate('DrawerStack')                
+                if (user.clientID != null){
+                    navigate('DrawerStack')
+                }else{
+                    navigate('StaffDrawerStack')                    
+                }
             }
         }, 2000);
     }

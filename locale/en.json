@@ -67,8 +67,8 @@
     "Question": "Question",
     "Successfully send results.\\nRecommend Test:": "Successfully send results.\\nRecommend Test:",
     "Success": "Success",
-    "Thank you for your select Community Health Care.": "Thank you for your select Community Health Care.",
-    "You will receive the order confirmation on your email.": "You will receive the order confirmation on your email.",
+    "Thank you for your select Community Health Care": "Thank you for your select Community Health Care.",
+    "You will receive the order confirmation on your email": "You will receive the order confirmation on your email.",
     "Log out": "Log out",
     "Don't you have acount?": "Don't you have acount?",
     "I accept the": "I accept the",
@@ -85,5 +85,6 @@
     "Order ID": "Order ID",
     "Order Time": "Order Time",
     "Accept": "Accept", 
-    "Are you sure to log out?": "Are you sure to log out?"
+    "Are you sure to log out?": "Are you sure to log out?",
+    "All Orders": "All Orders"
 }

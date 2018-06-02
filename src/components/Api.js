@@ -152,6 +152,12 @@ async function getAgreement(){
     return await getJSON(url)
 }
 
+async function getAllStaffOrders(){
+    var user = await AppData.getItem('login_user')
+    var url = `${API_ROOT}/Order/GetAllStaffOrders?StaffID=${user.staffID}`
+    return await getJSON(url)
+}
+
 export default { 
     getJSON, 
     postJSON, 
@@ -173,4 +179,5 @@ export default {
     getContactInfo,
     sendContactMessage,
     getAgreement,
+    getAllStaffOrders,
 }

@@ -67,8 +67,8 @@
     "Question": "سؤال",
     "Successfully send results.\\nRecommend Test:": "تم اتمام الإستبيان بنجاح.... ننصح بالقيام بالفحوصات التالية:",
     "Success": "تم بنجاح",
-    "Thank you for your select Community Health Care.": "شكرا لإختيارك Community Health Care.",
-    "You will receive the order confirmation on your email.": "ستتلقي بريد الكتروني بخصوص طلبكم.",
+    "Thank you for your select Community Health Care": "شكرا لإختيارك Community Health Care.",
+    "You will receive the order confirmation on your email": "ستتلقي بريد الكتروني بخصوص طلبكم.",
     "Log out": "الخروج",
     "Don't you have acount?": "أليس عندك حساب؟",
     "I accept the": "أنا أتفق",
@@ -85,5 +85,6 @@
     "Order ID": "رقم التعريف الخاص بالطلب",
     "Order Time": "وقت الطلب",
     "Accept": "أنا أتفق",
-    "Are you sure to log out?": "هل أنت متأكد من تسجيل الخروج؟"
+    "Are you sure to log out?": "هل أنت متأكد من تسجيل الخروج؟",
+    "All Orders": "جميع الطلبات"
 }

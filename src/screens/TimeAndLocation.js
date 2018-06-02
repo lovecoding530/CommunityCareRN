@@ -108,8 +108,8 @@ export default class TimeAndLocation extends Component {
             setTimeout(() => {
                 if(res == true){
                     Alert.alert(
-                        strings('Thank you for your select Community Health Care.'),
-                        strings('You will receive the order confirmation on your email.'),
+                        strings('Thank you for your select Community Health Care'),
+                        strings('You will receive the order confirmation on your email'),
                         [
                             {text: strings('OK')},
                         ],

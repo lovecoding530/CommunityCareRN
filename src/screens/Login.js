@@ -37,7 +37,11 @@ export default class Login extends Component {
             if(res != null) {
                 await AppData.setItem('login_user', res)
                 const {navigate} = this.props.navigation
-                navigate('DrawerStack')
+                if(res.clientID != null){
+                    navigate('DrawerStack')
+                }else{
+                    navigate('StaffDrawerStack')                    
+                }
             }else{
                 alert("Email or password is not correct")            
             }

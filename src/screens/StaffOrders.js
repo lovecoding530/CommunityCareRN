@@ -19,7 +19,7 @@ import API from '../components/Api';
 import moment from 'moment';
 import { strings, localePre } from '@i18n';
 
-export default class LabTestHistory extends Component {
+export default class StaffOrders extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -30,36 +30,9 @@ export default class LabTestHistory extends Component {
 
     async componentDidMount() {
         this.setState({loaderVisible: true})
-        const orders = await API.getAllUserOrders()
+        const orders = await API.getAllStaffOrders()
         console.log(orders)
         this.setState({orders, loaderVisible: false})
-    }
-
-    async onDelete(orderID, index) {
-        Alert.alert(
-            strings('Are you sure?'),
-            strings('Are you sure to delete the order?'),
-            [
-                {text: strings('No'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {text: strings('Yes'), onPress: async () => {
-                    this.setState({loaderVisible: true})
-                    const res = await API.deleteOrder(orderID)
-                    console.log(res)
-                    this.setState({loaderVisible: false})
-                    setTimeout(() => {
-                        if(res == true){
-                            alert('Successfully deleted your order')
-                            var orders = Utils.copy(this.state.orders)
-                            orders.splice(index, 1)
-                            this.setState({orders})
-                        }else{
-                            alert('failed to delete the order')
-                        } 
-                    }, 500);
-                }},
-            ],
-            { cancelable: false }
-        )
     }
 
     onView(order){
@@ -67,16 +40,6 @@ export default class LabTestHistory extends Component {
         navigate('LabTestDetail', {order})
     }
     
-    onEdit(order){
-        const {navigate} = this.props.navigation
-        navigate('TimeAndLocation', {order, callback: async (updated)=>{
-            if(updated){
-                const orders = await API.getAllUserOrders()
-                this.setState({orders})
-            }
-        }})
-    }
-
     renderItem({item, index}) {
         var dateStr = item.orderDate
         var formatted = moment(dateStr).format("YYYY-MM-DD")
@@ -85,14 +48,6 @@ export default class LabTestHistory extends Component {
                 style={{paddingVertical: 8, paddingHorizontal: 16, flexDirection: 'row', borderBottomWidth: 0.5, borderBottomColor: '#ddd'}}
                 onPress={this.onView.bind(this, item)}>
                 <MyText medium style={{flex: 1}}>{formatted}</MyText>
-                <View style={{flexDirection: 'row'}}>
-                    <TouchableOpacity onPress={this.onEdit.bind(this, item)}>
-                        <Image source={Images.edit} style={{width: 24, height: 24, marginHorizontal: 4, tintColor: '#666'}}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={this.onDelete.bind(this, item.orderID, index)}>
-                        <Image source={Images.delete} style={{width: 24, height: 24, marginHorizontal: 4, tintColor: '#666'}}/>
-                    </TouchableOpacity>
-                </View>
             </TouchableOpacity>
         )
     }
@@ -102,7 +57,7 @@ export default class LabTestHistory extends Component {
         <Container>
             <Loader loading={this.state.loaderVisible}/>
             <Content contentContainerStyle={styles.container}>
-                <MyText medium bold center style={{marginVertical: 16,}}>{strings('History of Your Lab Tests')}</MyText>
+                <MyText medium bold center style={{marginVertical: 16,}}>{strings('All Orders')}</MyText>
                 <FlatList
                     data={this.state.orders}
                     renderItem = {this.renderItem.bind(this)}
@@ -113,12 +68,11 @@ export default class LabTestHistory extends Component {
         );
     }
 }
-  
+
 const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.backgroundPrimary,
         flex: 1,
     },
-
 });
   
