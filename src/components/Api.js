@@ -158,6 +158,11 @@ async function getAllStaffOrders(){
     return await getJSON(url)
 }
 
+async function getTestItemsByRecomendation(surveyRecomendation){
+    var url = `${API_ROOT}/Order/GetTestItemsByRecomendation?SurveyRecomendation=${surveyRecomendation}`
+    return await getJSON(url)
+}
+
 export default { 
     getJSON, 
     postJSON, 
@@ -180,4 +185,5 @@ export default {
     sendContactMessage,
     getAgreement,
     getAllStaffOrders,
+    getTestItemsByRecomendation
 }

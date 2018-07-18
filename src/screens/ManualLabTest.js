@@ -21,7 +21,9 @@ import { strings, localePre } from '@i18n';
 export default class ManualLabTest extends Component {
     constructor(props){
         super(props)
+        const {state: {params}} = this.props.navigation
         this.state = {
+            recommendTest: params ? params.recommendTest : null,        
             loaderVisible: false,
             bloodTests: [],
             dropdownValues: [],
@@ -37,7 +39,16 @@ export default class ManualLabTest extends Component {
             var item = {value:test[`${localePre}name`]}
             return item
         })
-        this.setState({bloodTests, dropdownValues, loaderVisible: false})
+        let selectedLabTests = []
+        if(this.state.recommendTest){
+            let labTestIDStr = await API.getTestItemsByRecomendation(this.state.recommendTest)
+            let labTestIDs = labTestIDStr.split(',')
+            for (const testId of labTestIDs) {
+                let testIndex = bloodTests.findIndex((test)=>test.btID == testId)
+                if(testIndex >= 0) selectedLabTests.push(testIndex)
+            }
+        }
+        this.setState({bloodTests, dropdownValues, selectedLabTests, loaderVisible: false})
     }
 
     goBack() {
@@ -47,7 +58,11 @@ export default class ManualLabTest extends Component {
 
     onSurvey() {
         const {navigate, goBack} = this.props.navigation
-        navigate('QuickSurveyStack')
+        if(this.state.recommendTest){
+            goBack()
+        }else{
+            navigate('QuickSurveyStack')
+        }
     }
 
     onProceed(){

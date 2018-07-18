@@ -77,18 +77,35 @@ export default class QuickSurvey extends Component {
         console.log(response)
         setTimeout(() => {
             if(response.Message == null){
-                Alert.alert(
-                    strings('Survey is completed'),
-                    `${strings('Recommended test is :')}\n${response}`,
-                    [
-                        {text: strings('Cancel'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                        {text: strings('OK'), onPress: () => {
-                            const {navigate} = this.props.navigation
-                            navigate('PaymentMethod', {recommendTest: response})
-                        }},
-                    ],
-                    { cancelable: false }
-                )
+                if(response == "No Tests Needed"){
+                    Alert.alert(
+                        strings('Survey is completed'),
+                        `${response}`,
+                        [
+                            {text: strings('OK'), onPress: () => {
+                                const {navigate} = this.props.navigation
+                                navigate('HomeStack')
+                            }},
+                        ],
+                        { cancelable: false }
+                    )
+                }else{
+                    Alert.alert(
+                        strings('Survey is completed'),
+                        `${strings('Recommended test is :')}\n${response}`,
+                        [
+                            {text: strings('Cancel'), onPress: () => {
+                                const {navigate} = this.props.navigation
+                                navigate("SkipSurveyStack")
+                            }, style: 'cancel'},
+                            {text: strings('OK'), onPress: () => {
+                                const {navigate} = this.props.navigation
+                                navigate('ManualLabTest', {recommendTest: response})
+                            }},
+                        ],
+                        { cancelable: false }
+                    )    
+                }
             }else{
                 alert(response.Message)
             }

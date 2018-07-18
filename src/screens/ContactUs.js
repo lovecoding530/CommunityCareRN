@@ -3,7 +3,8 @@ import {
   Platform,
   StyleSheet,
   View, 
-  Image
+  Image,
+  Alert
 } from 'react-native';
 
 import { Container, Content, Button, Icon, Form, Item, Label, Input, Text, Footer,Textarea} from 'native-base';
@@ -43,7 +44,17 @@ export default class ContactUs extends Component {
 
         if(res == true){
             setTimeout(() => {
-                alert('Successfully sent the message')
+                Alert.alert(
+                    strings('Contact Us'),
+                    'Successfully sent the message',
+                    [
+                        {text: strings('OK'), onPress: () => {
+                            const {navigate} = this.props.navigation
+                            navigate('HomeStack')
+                        }},
+                    ],
+                    { cancelable: false }
+                )   
             }, 500);    
         }
     }

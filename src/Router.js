@@ -36,6 +36,8 @@ import StaffOrders from "./screens/StaffOrders"
 
 import ContactUs from "./screens/ContactUs";
 
+import Home from "./screens/Home";
+
 const headerStyle = { 
     backgroundColor: '#fff', 
     height: 44, 
@@ -113,6 +115,7 @@ export const LoginStack = StackNavigator({
 
 export const QuickSurveyStack = StackNavigator({
     QuickSurvey: { screen: QuickSurvey, },
+    ManualLabTest: { screen: ManualLabTest, },
     PaymentMethod: { screen: PaymentMethod, },
     TimeAndLocation: { screen: TimeAndLocation, },
 }, {
@@ -200,8 +203,21 @@ export const ContactUsStack = StackNavigator({
     },
 });
 
+export const HomeStack = StackNavigator({
+    Home: { 
+        screen: Home, 
+        navigationOptions: ({ navigation }) => ({
+            headerTitle: <HeaderTitle/>,
+            headerStyle: headerStyle,
+            headerLeft: <MenuIcon {...navigation} />,
+            headerRight: <EmptyIcon/>
+        }),
+    },
+});
+
 export const DrawerStack = DrawerNavigator(
     {
+        HomeStack: {screen: HomeStack},
         QuickSurveyStack: { screen: QuickSurveyStack },
         SkipSurveyStack: { screen: SkipSurveyStack },
         SurveyHistoryStack: { screen: SurveyHistoryStack },
@@ -209,7 +225,6 @@ export const DrawerStack = DrawerNavigator(
         LabTestHistoryStack: { screen: LabTestHistoryStack },
     },
     {
-        initialRouteName: "SurveyHistoryStack",
         drawerWidth: width * 2 / 3,
         drawerPosition: 'left',
         contentComponent: props => <Menu {...props} />

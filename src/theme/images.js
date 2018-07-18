@@ -8,7 +8,7 @@ const images = {
     calendar : require('../assets/images/calendar.png'),
     clock : require('../assets/images/clock.png'),
 
-    dollar : require('../assets/images/dollar.png'),
+    dollar : require('../assets/images/sar-bold.png'),
 
     delete : require('../assets/images/delete.png'),
     view : require('../assets/images/view.png'),
