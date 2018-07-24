@@ -673,7 +673,7 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = Q9G8FNAV88;
+						DevelopmentTeam = HCQ2668M57;
 					};
 				};
 			};
@@ -1135,7 +1135,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = Q9G8FNAV88;
+				DEVELOPMENT_TEAM = HCQ2668M57;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
@@ -1149,6 +1149,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.saudicommunitycare.CommunityCare;
 				PRODUCT_NAME = CommunityCareRN;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1160,7 +1161,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q9G8FNAV88;
+				DEVELOPMENT_TEAM = HCQ2668M57;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
@@ -1174,6 +1175,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.saudicommunitycare.CommunityCare;
 				PRODUCT_NAME = CommunityCareRN;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
