@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>The location service required to sign up</string>
+	<string>The location service required to make otders with your location.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
